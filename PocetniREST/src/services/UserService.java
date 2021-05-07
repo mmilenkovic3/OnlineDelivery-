@@ -26,7 +26,7 @@ public class UserService {
 	@Context
 	HttpServletRequest request;
 	
-	//User loggedUser;
+	User loggedUser;
 
 	@GET
 	@Path("/getAllUsers")
@@ -49,6 +49,55 @@ public class UserService {
 			
 		
 		
+	}
+	
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response LogIn(HashMap<String, String> data)
+	{
+		String password = data.get(data.keySet().toArray()[0]);
+		String username = data.get(data.keySet().toArray()[1]);
+		User u = UserRepository.FindUser(username, password);
+		System.out.println("U: " + username + " P: "+ password);
+		loggedUser = u;
+		System.out.println(u.getName());
+		//System.out.println("USER: " + user);		
+		
+		u = UserRepository.LogIn(u);
+		if(u != null){
+			System.out.println("NEKO SE ULOGOVAO.");
+				request.getSession().setAttribute("loggedUser", u);
+				return Response.status(200).entity(u).build();
+			}
+		
+		return Response.status(400).entity("User doesn't exists!").build();
+	}
+	
+	@GET
+	@Path("/getLoggedUser")
+	public Response GetLoggedUser()
+	{
+		System.out.println("Get logged user, pozvan");
+		User user = (User) request.getSession().getAttribute("loggedUser");
+		System.out.println(user);
+		return Response.status(200).entity(user).build();
+	}
+	
+	@GET
+	@Path("/logout")
+	public Response LogOut() {	
+		System.out.println("USAO U LOG OUT?");
+		System.out.println(request.getSession().getAttribute("loggedUser"));
+		if(GetLoggedUser() != null)
+		{
+			request.getSession().removeAttribute("loggedUser");
+			//return Response.status(200).entity("Successeffully logged out!").build();
+			return Response.status(200).entity(GetLoggedUser()).build();
+		}
+		else
+			return Response.status(400).entity("Error! Don't have logged user!!").build();
 	}
 	
 	

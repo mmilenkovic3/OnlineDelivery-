@@ -21,7 +21,7 @@ import model.User;
 public class UserRepository {
 
 	public static ObjectMapper objMapper = new ObjectMapper();
-	public static String pathUsers = "C:\\Users\\Milenkovic\\Desktop\\Sistem apoteka\\PocetniREST\\WebContent\\files\\users.json";
+	public static String pathUsers = "C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\files\\users.json";
 
 	public static ArrayList<User> GetAllUsers() {
 
@@ -79,6 +79,8 @@ public class UserRepository {
 	
 	public static User FindUser(String username, String password)
 	{
+		System.out.println("Find user");
+	
 		for(User u : GetAllUsers())
 		{
 			if(u.getUsername().equals(username) && u.getPassword().equalsIgnoreCase(password))

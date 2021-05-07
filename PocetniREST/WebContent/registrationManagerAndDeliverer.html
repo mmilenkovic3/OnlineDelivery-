@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Manager or Deliverer</title>
+</head>
+<body>
+
+<h1> Registration: </h1>
+<form id="registrationForm">
+	<table>
+	<tr>
+		<tr>
+		<td>Role: </td>
+		<td> <input type="radio" id="manager" class="radioBtnClass" value="Manager"  name="radiobtnRole">Manager</input>  </td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td> <input type="radio" id="deliverer" class="radioBtnClass" value="Deliverer" name="radiobtnRole"> Deliverer </input> </td>
+	</tr>
+	<tr>
+		<td> Name: </td>
+		<td> <input type="text" id="name"  style="border-color:red" onkeydown="nameEvent();" /> </td>
+	</tr>
+	<tr>
+		<td> Lastname: </td>
+		<td> <input type="text" id="lastname" style="border-color:red"> </td>
+	</tr>
+	<tr>
+		<td> Gender: </td>
+		<td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
+	</tr>
+	
+	<tr>
+		<td> Birthday: </td>
+		<td> <input type="date" id="birthday" /></td>
+	</tr>
+	<tr>
+		<td> Username: </td>
+		<td> <input type="text" id="username" style="border-color:red" > </td>
+	</tr>
+	<tr>
+		<td> Password: </td>
+		<td> <input type="password" id="password" style="border-color:red"> </td>
+	</tr>
+	<tr>
+		<td> Password repeat: </td>
+		<td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
+	</tr>
+	<tr colspan="2">
+		<td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
+	</tr>
+	
+	</table>
+	
+</form>
+
+</body>
+</html>
+
+<script>
+var role;
+var name;
+var lastname;
+var gender;
+var birthday;
+var username;
+var password;
+var passwordRepeat;
+
+
+console.log("USPESNO POZVATO");
+var role;
+var name;
+var lastname;
+var gender;
+var birthday;
+var username;
+var password;
+var passwordRepeat;
+
+function myFunction() {
+console.log("USPESNO POZVATO");
+role = $("input:radio[name=radiobtnRole]:checked").val();
+name = document.getElementById("name").value;
+lastname = document.getElementById("lastname").value;
+username = document.getElementById("username").value;
+birthday = document.getElementById("birthday").value;
+password = document.getElementById("password").value;
+passwordRepeat = document.getElementById("passwordrepeat").value;
+gender = $("input:radio[name=radiobtn]:checked").val()
+
+console.log(name + " " +gender + " " + role);
+
+if(role == "Manager")
+	role = "MANAGER";
+else
+	role = "DELIVERER";
+
+if(gender == "Male")
+	gender = "MALE";
+else
+	gender = "FEMALE";
+
+console.log(birthday);
+console.log(name);
+
+/*$.ajax({
+	type : "POST",
+	url : "rest/users/saveGuest",
+	data : JSON.stringify({
+		username : username,
+		password : password,
+		name : name,
+		lastname : lastname,
+		gender : gender,
+		birthday : birthday		
+	}),
+	contentType : "application/json",
+	dataType : 'json',
+	success : function(data) {		
+			console.log(data);
+			alert("Succeseffully registrated!")
+			window.location.replace("index.html");
+		
+
+	},
+	error : function(message) {
+		console.log(message.responseText);
+		alert(message.responseText);
+	}
+})*/
+
+}
+
+
+
+
+
+function nameEvent()
+{
+	
+	name = document.getElementById("name").value;
+	console.log(name);
+	if(name != "")
+	{		
+		
+		document.getElementById("name").style = "border-color:black"; 
+	}
+	else
+		document.getElementById("name").style = "border-color:red"; 
+
+}
+
+
+
+</script>
