@@ -3,6 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Add Manager or Deliverer</title>
+<script src="jquery-3.3.1.min.js"> </script>
 </head>
 <body>
 
@@ -63,15 +64,6 @@
 </html>
 
 <script>
-var role;
-var name;
-var lastname;
-var gender;
-var birthday;
-var username;
-var password;
-var passwordRepeat;
-
 
 console.log("USPESNO POZVATO");
 var role;
@@ -85,12 +77,13 @@ var passwordRepeat;
 
 function myFunction() {
 console.log("USPESNO POZVATO");
-role = $("input:radio[name=radiobtnRole]:checked").val();
+
 name = document.getElementById("name").value;
 lastname = document.getElementById("lastname").value;
 username = document.getElementById("username").value;
 birthday = document.getElementById("birthday").value;
 password = document.getElementById("password").value;
+role = $("input:radio[name=radiobtnRole]:checked").val();
 passwordRepeat = document.getElementById("passwordrepeat").value;
 gender = $("input:radio[name=radiobtn]:checked").val()
 
@@ -109,10 +102,11 @@ else
 console.log(birthday);
 console.log(name);
 
-/*$.ajax({
+$.ajax({
 	type : "POST",
 	url : "rest/users/saveGuest",
 	data : JSON.stringify({
+		role : role,
 		username : username,
 		password : password,
 		name : name,
@@ -125,7 +119,7 @@ console.log(name);
 	success : function(data) {		
 			console.log(data);
 			alert("Succeseffully registrated!")
-			window.location.replace("index.html");
+			window.location.replace("admin.html");
 		
 
 	},
@@ -133,7 +127,7 @@ console.log(name);
 		console.log(message.responseText);
 		alert(message.responseText);
 	}
-})*/
+})
 
 }
 

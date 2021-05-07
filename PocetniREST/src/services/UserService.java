@@ -93,8 +93,8 @@ public class UserService {
 		if(GetLoggedUser() != null)
 		{
 			request.getSession().removeAttribute("loggedUser");
-			//return Response.status(200).entity("Successeffully logged out!").build();
-			return Response.status(200).entity(GetLoggedUser()).build();
+			return Response.status(200).entity("Successeffully logged out!").build();
+			//return Response.status(200).entity(GetLoggedUser()).build();
 		}
 		else
 			return Response.status(400).entity("Error! Don't have logged user!!").build();

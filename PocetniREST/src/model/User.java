@@ -77,6 +77,23 @@ public User(String username, String password, String name, String lastname, Gend
 		this.idRestaurant = 0;
 		this.idAllDelivery = new ArrayList<Integer>();
 	}
+
+public User(Role role, String username, String password, String name, String lastname, Gender gender, Date birthday) {
+	
+	this.role = role;
+	this.username = username;
+	this.password = password;
+	this.name = name;
+	this.lastname = lastname;
+	this.gender = gender;
+	this.birthday = birthday;
+	this.allOrder = new ArrayList<Order>();
+	this.basket = new ArrayList<Basket>();
+	this.points = 10;
+	this.customerType = new CustomerType();
+	this.idRestaurant = 0;
+	this.idAllDelivery = new ArrayList<Integer>();
+}
 	
 	
 	

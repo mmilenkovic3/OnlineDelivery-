@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import model.Gender;
-
+import model.Role;
 import model.User;
 
 public class UserRepository {
@@ -45,7 +45,14 @@ public class UserRepository {
 			System.out.println("Sa user repo.");
 			String json = objMapper.writeValueAsString(user);
 			ArrayList<User> users = GetAllUsers();
-			User u = new User(user.getUsername(), user.getPassword(), user.getName(), user.getLastname(), user.getGender(), user.getBirthday());
+			User u = null;
+			if(user.getRole() == Role.MANAGER || user.getRole() == Role.DELIVERER)			
+				{
+					 u = new User(user.getRole(), user.getUsername(), user.getPassword(), user.getName(), user.getLastname(), user.getGender(), user.getBirthday());
+				}else
+				{
+					 u = new User(user.getUsername(), user.getPassword(), user.getName(), user.getLastname(), user.getGender(), user.getBirthday());
+				}
 			users.add(u);
 			objMapper.writeValue(Paths.get(pathUsers).toFile(), users);
 			return u;
