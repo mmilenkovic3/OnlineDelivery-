@@ -54,13 +54,17 @@ function SignIn() {
 					$(location).attr('href', 'http://localhost:8080/PocetniREST/admin.html');
 
 				}
-				else if(data.role == "HOST"){
-					$(location).attr('href', 'http://localhost:8080/PocetniREST/host.html');
+				else if(data.role == "CUSTOMER"){
+					console.log("Customer je nadjen , loguje se.");
+					$(location).attr('href', 'http://localhost:8080/PocetniREST/customer.html');
 
-				}else if(data.role == "GUEST"){
-					$(location).attr('href', 'http://localhost:8080/PocetniREST/guest.html');
+				}else if(data.role == "MANAGER"){
+					$(location).attr('href', 'http://localhost:8080/PocetniREST/manager.html');
 
-					}else {
+					} else if(data.role == "DELIVERER"){
+						$(location).attr('href', 'http://localhost:8080/PocetniREST/deliverer.html');
+
+					} else {
 					console.log("invalid username.");
 					}},
 		error : function(message) {

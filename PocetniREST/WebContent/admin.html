@@ -3,13 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Rent apartment</title>
-<script src="admin.js"> </script>
+
 <script src="jquery-3.3.1.min.js"> </script>
+<script src="admin.js"> </script>
 </head>
 <body>
 <h1> Admin - Online deilvery </h1>
 </body>
 <button id="regManager" onclick="regManagerAndDeliverer()"> Registration </button>
 <br/>
-<button id="logout" > Log out </button>
+<button id="logOut" onclick="logOut()"> Log out </button>
+<br> 
+<table id="allUsers">
+ <tr>
+ <th> ROLE </th>
+ <th> USERNAME </th>
+ <th> NAME </th>
+
+ <th>GENDER</th>
+ <th> BIRTHDAY </th>
+ 
+ </tr>
+
+
+</table>
 </html>

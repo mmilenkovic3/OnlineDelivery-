@@ -2,17 +2,14 @@ package repository;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 import model.Gender;
 import model.Role;
@@ -98,5 +95,58 @@ public class UserRepository {
 		}
 		return null;
 	}
+	
+	public static User editUser(HashMap<String,String> data) 
+	{
+		ArrayList<User> users = GetAllUsers();
+		User editedU = new User();
+		
+		try
+		{
+			for(User user : users)
+		
+		{
+
+				System.out.println("username:" + user.getUsername());
+				System.out.println("username iz file:" + data.get("username").toString());
+			if((user.getUsername()).contentEquals(data.get("username")))
+			{
+				
+				System.out.println("Nasao usera za edit u repository!");
+				user.setName(data.get("name"));
+				user.setLastname(data.get("lastname"));										
+				try {
+					user.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(data.get("birthday")));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+								
+				
+				if(data.get("gender").equals("MALE"))
+					user.setGender(Gender.MALE);
+				else
+					user.setGender(Gender.FEMALE);
+				
+				user.setUsername(data.get("username"));
+				editedU = user;
+				System.out.println("Edited:" + editedU);
+				System.out.println("User:" + user);
+				break;
+			}
+		}
+			objMapper.writeValue(Paths.get(pathUsers).toFile(), users);
+			return editedU;	
+			
+		}catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+		
+		
+	}
+	
+	
 
 }

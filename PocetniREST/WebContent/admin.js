@@ -1,4 +1,29 @@
 var loggedUser;
+$(document).ready(function(){
+	  $.getJSON("http://localhost:8080/PocetniREST/rest/users/getAllUsers", function(data){
+	    var employee_data = '';
+	    $.each(data, function(key, value){
+	    	console.log(value.gender);
+	      employee_data += '<tr>';
+	      employee_data += '<td>'+value.role+'</td>';
+	      employee_data += '<td>'+value.username+'</td>';
+	      employee_data += '<td>'+value.name+ ' ' + value.lastname +'</td>';	      
+	      
+	      if(value.gender == "FEMALE")
+	    	  employee_data += '<td> Female</td>';
+	      
+	      else
+	    	  employee_data += '<td> Male</td>';
+	      employee_data += '<td>'+ (new Date(value.birthday)).toISOString().split('T')[0]+'</td>';
+
+		
+	      employee_data += '<tr>';
+	    });
+	    $('#allUsers').append(employee_data);
+	  });
+	  
+	});
+
 function regManagerAndDeliverer()
 {
 	$(location).attr('href', 'http://localhost:8080/PocetniREST/registrationManagerAndDeliverer.html');
@@ -38,15 +63,11 @@ function logOut() {
 			user : getLoggedUser()
 		},*/
 		success : function(data) {
-			if(data)
-				console.log("STA");
-			else
-				{
+			
 				console.log(data.response);
 				console.log("DAL UDJE TU UOPSTE?");
 				window.location.replace("index.html");
-				}
-			
+						
 		},
 		error : function(message) {
 			console.log("err");

@@ -28,7 +28,7 @@
 	
 	<tr>
 		<td> Birthday: </td>
-		<td> <input type="date" id="birthday" /></td>
+		<td> <input type="datetime" id="birthday" placeholder="dd-mm-yyyy" /></td>
 	</tr>
 	<tr>
 		<td> Username: </td>
@@ -66,7 +66,7 @@ console.log("USPESNO POZVATO");
 name = document.getElementById("name").value;
 lastname = document.getElementById("lastname").value;
 username = document.getElementById("username").value;
-birthday = document.getElementById("birthday").value;
+birthday = JSON.stringify(new Date(document.getElementById("birthday").value));
 password = document.getElementById("password").value;
 passwordRepeat = document.getElementById("passwordrepeat").value;
 gender = $("input:radio[name=radiobtn]:checked").val()
@@ -78,7 +78,9 @@ if(gender == "Male")
 else
 	gender = "FEMALE";
 
-console.log(birthday);
+console.log(new Date(birthday));
+var json = JSON.stringify(new Date(birthday));
+console.log(json);
 console.log(name);
 
 $.ajax({
@@ -105,7 +107,7 @@ $.ajax({
 		console.log(message.responseText);
 		alert(message.responseText);
 	}
-})
+});
 
 }
 

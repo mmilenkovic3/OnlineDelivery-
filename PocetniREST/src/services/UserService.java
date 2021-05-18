@@ -39,9 +39,12 @@ public class UserService {
 	@POST
 	@Path("/saveGuest")
 	public Response saveGuest(User user) throws IOException {
+		
 
 		if(UserRepository.UniqueUsername(user.getUsername()))
-		{					
+		{		
+			if((user.getRole() == Role.MANAGER || user.getRole() == Role.DELIVERER ) && loggedUser.getRole() != Role.ADMIN)
+				return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
 			User u = UserRepository.saveGuest(user);				
 			return Response.status(200).entity(u).build();
 		}		
@@ -93,14 +96,32 @@ public class UserService {
 		if(GetLoggedUser() != null)
 		{
 			request.getSession().removeAttribute("loggedUser");
-			return Response.status(200).entity("Successeffully logged out!").build();
-			//return Response.status(200).entity(GetLoggedUser()).build();
+			//return Response.status(200).entity("Successeffully logged out!").build();
+			return Response.status(200).build();
 		}
 		else
 			return Response.status(400).entity("Error! Don't have logged user!!").build();
 	}
 	
-	
+	@POST
+	@Path("/editUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response Edit(HashMap<String, String> data)
+	{
+		System.out.println("Usao u edit!");
+		System.out.println("podatci" + data);
+		if (GetLoggedUser() == null) {
+			return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
+		}
+		else
+		{
+			User user = UserRepository.editUser(data);
+			request.getSession().setAttribute("loggedUser", user);
+			return Response.status(200).entity(user).build();
+		}
+			
+	}
 
 	
 }

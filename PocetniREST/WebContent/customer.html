@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rent apartment</title>
+
+<script src="jquery-3.3.1.min.js"> </script>
+<script src="customer.js"> </script>
+</head>
+<body>
+<h1> Customer - Online deilvery </h1>
+</body>
+
+<button id="logOut" onclick="logOut()" > Log out </button>
+<br> 
+<div>
+    <form id="changeProfile">
+        <table>
+        <tr>
+            <td> Name: </td>
+            <td> <input type="text" id="name"  /> </td>
+        </tr>
+        <tr>
+            <td> Lastname: </td>
+            <td> <input type="text" id="lastname"> </td>
+        </tr>
+        <tr>
+            <td> Gender: </td>
+            <td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
+        </tr>
+        
+        <tr>
+            <td> Birthday: </td>
+            <td> <input type="date" id="birthday" placeholder="dd-mm-yyyy" /></td>
+        </tr>
+        <tr>
+            <td> Username: </td>
+            <td> <input type="text" id="username"></td>
+        </tr>
+        <!--<tr>
+            <td> Password: </td>
+            <td> <input type="password" id="password" style="border-color:red"> </td>
+        </tr>
+        <tr>
+            <td> Password repeat: </td>
+            <td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
+        </tr>
+        <tr colspan="2">
+            <td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
+        </tr>-->
+        
+        </table>
+        
+    </form>
+    <br>
+    <button id="edit" onclick="edit()" value="Edit"> Edit</button>
+    <br>
+
+    <button id="save" onclick="save()" value="Save"> Save</button>
+    <br>
+    <button id="cancel" onclick="cancel()" value="Cancel"> Cancel</button>
+</div>
+
+
+</html>
