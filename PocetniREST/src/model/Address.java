@@ -3,14 +3,16 @@ package model;
 public class Address {
 	private String name;
 	private String number;
-	private String City;
+	private String city;
 	private int postCode;
+	
+	public Address() {}
 	
 	public Address(String name, String number, String city, int postCode) {
 		super();
 		this.name = name;
 		this.number = number;
-		City = city;
+		this.city = city;
 		this.postCode = postCode;
 	}
 
@@ -31,11 +33,11 @@ public class Address {
 	}
 
 	public String getCity() {
-		return City;
+		return this.city;
 	}
 
 	public void setCity(String city) {
-		City = city;
+		this.city = city;
 	}
 
 	public int getPostCode() {
@@ -48,7 +50,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [name=" + name + ", number=" + number + ", City=" + City + ", postCode=" + postCode + "]";
+		return "Address [name=" + name + ", number=" + number + ", City=" + city + ", postCode=" + postCode + "]";
 	}
 	
 	

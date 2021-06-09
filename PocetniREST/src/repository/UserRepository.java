@@ -128,7 +128,7 @@ public class UserRepository {
 				else
 					user.setGender(Gender.FEMALE);
 				
-				user.setUsername(data.get("username"));
+				user.setUsername(data.get("username"));				
 				editedU = user;
 				System.out.println("Edited:" + editedU);
 				System.out.println("User:" + user);

@@ -1,0 +1,42 @@
+[
+    {
+        "id":1,
+        "name":"Dva stapica",
+        "type": "CHINES",
+        "articles":[1,2,3],
+        "status":"OPEN",
+        "location":
+            {
+                "width":19.20,
+                "length": 20.2,
+                "address":
+                {
+                    "name":"Vase Stajica ",
+                    "number":"27",
+                    "city" :"Novi Sad",
+                    "postCode":21000
+                }
+            },
+        "logo":"../images/dvaStapica.jpg"
+    },
+    {
+        "id":2,
+        "name":"Tortilja casa",
+        "type": "MEXICAN",
+        "articles":[4,5,3],
+        "status":"OPEN",
+        "location":
+            {
+                "width":30.10,
+                "length": 20.1,
+                "address":
+                {
+                    "name":"Bulevar oslobodjenja",
+                    "number":"89",
+                    "city" :"Novi Sad",
+                    "postCode":21000
+                }
+            },
+        "logo":"C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\images\\tortiljaCasa.jpg"
+    }
+]

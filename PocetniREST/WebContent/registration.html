@@ -98,10 +98,33 @@ $.ajax({
 	dataType : 'json',
 	success : function(data) {		
 			console.log(data);
-			alert("Succeseffully registrated!")
-			window.location.replace("index.html");
+			//alert("Succeseffully registrated!");
 		
+	
+	console.log(username + " " + password );
+	
+	$.ajax({
+		type : "POST",
+		url : "rest/users/login",
+		data : JSON.stringify({
+			username : username,
+			password : password
+		}),
+		contentType : "application/json",
+		dataType : 'json',
+		success : function(data) {	
+			console.log("USPESNO?");			
+			console.log("Customer je nadjen , loguje se.");
+			$(location).attr('href', 'http://localhost:8080/PocetniREST/customer.html');
 
+				},
+		error : function(message) {
+			alert("Error!");
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+		
 	},
 	error : function(message) {
 		console.log(message.responseText);

@@ -5,6 +5,8 @@ public class Location {
 	private double length;
 	private Address address;
 	
+	public Location() {}
+	
 	public Location(double width, double length, Address address) {
 		super();
 		this.width = width;

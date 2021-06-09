@@ -89,6 +89,24 @@ public class UserService {
 	}
 	
 	@GET
+	@Path("/getAllManager")
+	public Response GetAllManager()
+	{
+		System.out.println("Get all manager, pozvan");
+		//User user = (User) request.getSession().getAttribute("loggedUser");
+		ArrayList<User> managerList = new ArrayList<User>();
+		
+		for(User manager : UserRepository.GetAllUsers())
+		{
+			if(manager.getRole().equals("MANAGER"))
+				managerList.add(manager);
+		}
+		
+		return Response.status(200).entity(managerList).build();
+	}
+	
+	
+	@GET
 	@Path("/logout")
 	public Response LogOut() {	
 		System.out.println("USAO U LOG OUT?");

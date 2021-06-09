@@ -2,23 +2,26 @@ package model;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public class Restaurant {
 	
 	private int id;
 	private String name;
 	private RestaurantType type;
-	private ArrayList<Integer> idArticles; 
+	private ArrayList<Integer> articles; 
 	private Status status;
 	private Location location;
 	private String logo;
 	
-	public Restaurant(int id, String name, RestaurantType type, ArrayList<Integer> idArticles, Status status,
+	private Restaurant() {}
+	public Restaurant(int id, String name, RestaurantType type, ArrayList<Integer> articles, Status status,
 			Location location, String logo) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.type = type;
-		this.idArticles = idArticles;
+		this.articles = articles;
 		this.status = status;
 		this.location = location;
 		this.logo = logo;
@@ -42,10 +45,10 @@ public class Restaurant {
 		this.type = type;
 	}
 	public ArrayList<Integer> getArticles() {
-		return idArticles;
+		return articles;
 	}
 	public void setArticles(ArrayList<Integer> idArticles) {
-		this.idArticles = idArticles;
+		this.articles = idArticles;
 	}
 	public Status getStatus() {
 		return status;
@@ -68,7 +71,7 @@ public class Restaurant {
 	
 	@Override
 	public String toString() {
-		return "Restaurant [id=" + id + ", name=" + name + ", type=" + type + ", articles=" + idArticles + ", status="
+		return "Restaurant [id=" + id + ", name=" + name + ", type=" + type + ", articles=" + articles + ", status="
 				+ status + ", location=" + location + ", logo=" + logo + "]";
 	}
 	

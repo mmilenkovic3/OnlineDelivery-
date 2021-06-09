@@ -1,4 +1,83 @@
-//var loggedUser;
+<html>
+    <head>
+        <meta charset="ISO-8859-1">
+        <script src="jquery-3.3.1.min.js"> </script>
+        <title> Manager </title>
+    </head>
+<body>
+    <h1> Welcome </h1>
+
+    <button id="logOut" onclick="logOut()" > Log out </button>
+<br> 
+<div>
+    <form id="changeProfile">
+        <table>
+        <tr>
+            <td> Name: </td>
+            <td> <input type="text" id="name"  /> </td>
+        </tr>
+        <tr>
+            <td> Lastname: </td>
+            <td> <input type="text" id="lastname"> </td>
+        </tr>
+        <tr>
+            <td> Gender: </td>
+            <td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
+        </tr>
+        
+        <tr>
+            <td> Birthday: </td>
+            <td> <input type="date" id="birthday" placeholder="dd-mm-yyyy" /></td>
+        </tr>
+        <tr>
+            <td> Username: </td>
+            <td> <input type="text" id="username"></td>
+        </tr>
+        <!--<tr>
+            <td> Password: </td>
+            <td> <input type="password" id="password" style="border-color:red"> </td>
+        </tr>
+        <tr>
+            <td> Password repeat: </td>
+            <td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
+        </tr>
+        <tr colspan="2">
+            <td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
+        </tr>-->
+        
+        </table>
+        
+    </form>
+    <br>
+    <button id="edit" onclick="edit()" value="Edit"> Edit</button>
+    <br>
+
+    <button id="save" onclick="save()" value="Save"> Save</button>
+    <br>
+    <button id="cancel" onclick="cancel()" value="Cancel"> Cancel</button>
+</div>
+<br>
+<h1> RESTAURANT INFO: </h1>
+<div class="restInfo">
+    <img id="logo"/>
+    <table id="restaurantInfo">
+        
+    </table>
+
+</div>
+
+
+</body>
+
+</html>
+
+<script>
+
+var loggedUser; 
 $(document).ready(function(){
 	document.getElementById("save").disabled = true;
 	document.getElementById("cancel").disabled = true;
@@ -45,6 +124,28 @@ $(document).ready(function(){
 
 	username.value = loggedUser.username;
 	username.disabled = true;
+
+//PREGLED SVOG RESTORANA 
+$.getJSON("http://localhost:8080/PocetniREST/rest/restaurant/getAllRestaurant", function(data){
+	    var restaurant_data = '';
+	    $.each(data, function(key, value){           
+            if(value.id == loggedUser.idRestaurant)
+            {
+                document.getElementById("logo").src = value.logo;
+                console.log(value.id);
+                restaurant_data += '<tr>';
+                restaurant_data += '<td> Name: </td> <td>'+value.name+'</td>';
+                restaurant_data += '</tr><tr>';
+                restaurant_data += '<td> Type: </td> <td>'+value.type+'</td>';
+                restaurant_data += '</tr><tr>';
+                restaurant_data += '<td> Address: </td> <td>'+value.location.address.name+ ' ' + value.location.address.number + ', ' +value.location.address.city+ '</td>';	      
+                restaurant_data += '</tr>';
+            }
+           
+	    });
+	    $('#restaurantInfo').append(restaurant_data);
+	  });
+
 });
 
 
@@ -216,3 +317,5 @@ function cancel()
 
 
 }
+
+</script>
