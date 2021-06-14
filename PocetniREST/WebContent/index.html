@@ -4,11 +4,171 @@
 <meta charset="UTF-8">
 <title>Rent apartment</title>
 <script src="index.js"> </script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="jquery-3.3.1.min.js"> </script>
 </head>
 <body>
-<h1> RADI LI </h1>
+
+
+
+<div class="jumbotron" >
+    <div class="container text-center">
+    <h1>ALLWAYS HUNGRY</h1>
+    <p>Online deliver</p>
+    
+    <button id="registration" class="btn btn-warning" onclick="redirect()"> Registration </button>
+    <button id="singin" class="btn btn-warning" onclick="signIn()"> Sing in </button>
+    </div>
+  </div>
+  
+  <div class="restaurant-container" id="restaurantContainer">
+        <div class="row" id="row">
+            
+        </div>
+  </div> 
+
 </body>
-<button id="registration" onclick="redirect()"> Registration </button>
-<button id="singin" onclick="signIn()"> Sing in </button>
 </html>
+<script>
+    $(document).ready(function(){
+
+        var restaurantList;
+
+        $.ajax({
+		async : false,
+		url : "rest/restaurant/getAllRestaurant",
+		type : 'GET',
+		dataType : 'json',
+		success : function(data) {
+			if (data) {
+				restaurantList = data;
+			}
+		},
+		error : function(errorThrown) {
+			toastr.error(errorThrown.responseText);
+		}
+	});
+
+    restaurantList.sort(function(a, b){
+    return a.status === b.status ? 0 : a.status < b.status ? -1 : 1;
+    });
+    console.log("AAAA");
+    console.log(restaurantList);
+
+    var divRow = document.getElementById("row");
+    //for(var one in restaurantList)
+    for(let one= restaurantList.length - 1; one >= 0; one--)
+    {
+            //console.log(restaurantList[one]);
+            var iDiv = document.createElement('div');
+            iDiv.id = restaurantList[one].id;
+            iDiv.className = 'col-sm-4';
+           
+            var panelprimary = document.createElement('div');            
+            panelprimary.className = 'panel panel-primary';
+
+
+            var panelheading = document.createElement('div');            
+            panelheading.className = 'panel-heading';
+            panelheading.style.fontSize = "22px";
+            panelheading.style.color = "black"; 
+            panelheading.textContent = restaurantList[one].name;
+
+            var panelbody = document.createElement('div');
+            var address = document.createElement('h4');
+            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number;
+            panelbody.appendChild(address);
+            var status = document.createElement('h5');
+            status.textContent = restaurantList[one].location.address.city;
+            panelbody.appendChild(status);
+            panelbody.className = 'panel-body';
+            //SADRZAJ
+
+            var panelfooter = document.createElement('div');
+            panelfooter.className = 'panel-footer';
+
+
+            var p = document.createElement('p');
+            p.textContent = restaurantList[one].name;
+           
+          
+            panelprimary.appendChild(panelheading);
+            panelprimary.appendChild(panelbody);
+            panelprimary.appendChild(panelfooter);
+            iDiv.appendChild(panelprimary);
+            divRow.appendChild(iDiv);
+
+
+
+    }
+
+   
+
+
+    /*
+    <div class="col-sm-4">
+                <div class="panel panel-primary">
+                <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+                </div>
+            </div>*/
+        
+
+
+
+    });
+</script>
+
+<style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
+
+
+.restaurant-container
+{    
+    margin-right: 30px;
+    margin-left: 30px;
+
+}
+
+.navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    .jumbotron {
+      background-color: #f9df95;
+      margin-bottom: 20px;
+      margin-top:-50px;
+      height: 240px;
+      
+      font-size:22px;
+    }
+
+    .btn
+    {
+        background-color: #ec93bf;
+    }
+
+    .panel-primary > .panel-heading
+    { 
+        background-color: #7ed4ef;
+        border-color: #7ed4ef;
+    }
+</style>

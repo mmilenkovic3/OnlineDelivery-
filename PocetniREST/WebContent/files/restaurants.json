@@ -1,42 +1,7 @@
-[
-    {
-        "id":1,
-        "name":"Dva stapica",
-        "type": "CHINES",
-        "articles":[1,2,3],
-        "status":"OPEN",
-        "location":
-            {
-                "width":19.20,
-                "length": 20.2,
-                "address":
-                {
-                    "name":"Vase Stajica ",
-                    "number":"27",
-                    "city" :"Novi Sad",
-                    "postCode":21000
-                }
-            },
-        "logo":"../images/dvaStapica.jpg"
-    },
-    {
-        "id":2,
-        "name":"Tortilja casa",
-        "type": "MEXICAN",
-        "articles":[4,5,3],
-        "status":"OPEN",
-        "location":
-            {
-                "width":30.10,
-                "length": 20.1,
-                "address":
-                {
-                    "name":"Bulevar oslobodjenja",
-                    "number":"89",
-                    "city" :"Novi Sad",
-                    "postCode":21000
-                }
-            },
-        "logo":"C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\images\\tortiljaCasa.jpg"
-    }
-]
+[{"id":1,"name":"Dva stapica","type":"CHINES","articles":[1,2,3],"status":"CLOSE","location":{"width":19.2,"length":20.2,"address":{"name":"Vase Stajica ","number":"27","city":"Novi Sad","postCode":21000}},"grade":10.5,"logo":"../images/dvaStapica.jpg"},
+{"id":2,"name":"Tortilja casa","type":"MEXICAN","articles":[4,5,3],"status":"OPEN","location":{"width":30.1,"length":20.1,"address":{"name":"Bulevar oslobodjenja","number":"89","city":"Novi Sad","postCode":21000}},"grade":7.0,"logo":"C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\images\\tortiljaCasa.jpg"},
+{"id":3,"name":"Probica","type":"ITALIAN","articles":null,"status":"OPEN","location":{"width":50.5,"length":10.0,"address":{"name":"Dositeja Obradovica","number":"4","city":"Novi Sad","postCode":21000}},"grade":9.5,"logo":"proba.jpg"},
+{"id":4,"name":"Neki tamo","type":"CHINES","articles":[],"status":"OPEN","location":{"width":90.0,"length":90.0,"address":{"name":"Marsala Tita","number":"90","city":"Beograd","postCode":90}},"grade":8,"logo":"prazno.jpg"},
+{"id":5,"name":"Qin - Qin","type":"CHINES","articles":[],"status":"OPEN","location":{"width":3.0,"length":2.0,"address":{"name":"Lovacki put","number":"2","city":"Zrenjanin","postCode":3}},"grade":6.5,"logo":"prazno.jpg"},
+{"id":6,"name":"Leskovacki rostilj","type":"ITALIAN","articles":[],"status":"OPEN","location":{"width":8.0,"length":8.0,"address":{"name":"Zeleznicka","number":"8","city":"Zrenjanin","postCode":1}},"grade":9,"logo":"prazno.jpg"},
+{"id":7,"name":"Svager","type":"ITALIAN","articles":[],"status":"CLOSE","location":{"width":10.5,"length":10.9,"address":{"name":"Prvomajska","number":"12","city":"Novi Sad","postCode":21000}},"grade":7.2,"logo":"prazno.jpg"}]

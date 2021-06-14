@@ -1,16 +1,18 @@
 <html>
     <head>
         <meta charset="ISO-8859-1">
+        <meta http-equiv='cache-control' content='no-cache'>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="jquery-3.3.1.min.js"> </script>
         <title> Manager </title>
     </head>
 <body>
-</body>
+
 <form id="changeProfile">
     <table>
     <tr>
         <td> Name: </td>
-        <td> <input type="text" id="name"  /> </td>
+        <td> <input type="text" id="name" class="form-control form-control-sm"  /> </td>
     </tr>
     <tr>
         <td> Type: </td>
@@ -24,7 +26,7 @@
         <td> Status: </td>
         <td> <select  id="status">
             <option> OPEN </option>
-            <option> CLOSED </option>
+            <option> CLOSE </option>
         </select>  </td>
     </tr>
     <tr>
@@ -34,11 +36,11 @@
     
     <tr>
         <td> Location height: </td>
-        <td> <input type="text" id="heigh"></input> </td>
+        <td> <input type="text" id="height"></input> </td>
     </tr>
     <tr>
         <td> Address: </td>
-        <td> <input type="text" id="addres"></td>
+        <td> <input type="text" id="address"></td>
     </tr>
     <tr>
         <td> Number: </td>
@@ -54,27 +56,332 @@
     </tr>
     <tr>
         <td> Select menager: </td>
-        <td> <select type="text" id="menager"></select></td>
+        <td> <select type="text" id="managerSelect"></select></td>
+        <td> <button value="Proba" id="btnAddManager" onclick="addManager();return false;">Add new Manager</button></td>
     </tr>
     <tr>
-        <td> Upload logo: </td>
-        <td> </td>
+        <td> Grade: </td>
+        <td> <select type="text" id="grade"></select></td>
+         </tr>
+    <tr>
+        <!--<td> Upload logo: </td>
+        <td><input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)"  style="display: none;" > </td>
+        <td><p><label for="file" style="cursor: pointer; padding: 2px;">Upload Image</label></p></td>
+        -->
+        <td> <label>Slika: </label> </td>
+          <td> <img id="output" height="150px" alt="your image"></td>
+          <td colspan="2" align="right"><input type="file" onchange="readURL(this);" id="fileSlika"  accept=".jpg, .jpeg, .png" /></td>
+
     </tr>
+            <p><img id="output" width="200" /></p>
 
+    <br>
+    <tr><td> 
+        <button onclick="saveRestaurant(); return false;" id="save"> Save restaurant
+        </button>
 
-    <button onclick="saveRestaurant">
-    </button>
+            </td>
+        <td>
+            <button onclick="back(); return false;"> Back
+            </button>
+        </td></tr>
+ 
+  
+    
     
     
     </table>
     
 </form>
 
+<div class="managerInfo" id="managerInfo" >
+<h1> Add new manager: </h1>
+<table>
+    <tr>
+		<td> Name: </td>
+		<td> <input type="text" id="managerName"  style="border-color:red" onkeydown="nameEvent();" /> </td>
+	</tr>
+	<tr>
+		<td> Lastname: </td>
+		<td> <input type="text" id="managerLastname" style="border-color:red"> </td>
+	</tr>
+	<tr>
+		<td> Gender: </td>
+		<td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
+	</tr>
+	
+	<tr>
+		<td> Birthday: </td>
+		<td> <input type="date" id="managerBirthday" placeholder="dd-mm-yyyy"/></td>
+	</tr>
+	<tr>
+		<td> Username: </td>
+		<td> <input type="text" id="managerUsername" style="border-color:red" > </td>
+	</tr>
+	<tr>
+		<td> Password: </td>
+		<td> <input type="password" id="password" style="border-color:red"> </td>
+	</tr>
+	<tr>
+		<td> Password repeat: </td>
+		<td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
+	</tr>
+	<tr>
+		<td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
+        <td>  <button id="cancel" value= "Cancel" onclick="cancel();return false;"> Cancel </button></td>
+	</tr>
+	
+	</table>
 
+   
+</div>
+
+</body>
 
 
 </html>
 
 <script>
 
+function readURL(input) {
+		if(input.files && input.files[0]){
+			var reader = new FileReader();
+			var file = input.files[0];
+			
+			reader.onload = function(e){	
+				$('#output').attr('src', e.target.result);
+                console.log(e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+
+            
+		}
+}
+
+
+var image;
+
+var loadFile = function(event) {
+	image = document.getElementById('output');
+    console.log(image.src);
+	image.src = URL.createObjectURL(event.target.files[0]);
+    console.log(image.src);
+    //console.log(document.getElementById("file").src);
+    var save = document.getElementById("save");
+    save.download = URL.createObjectURL(event.target.files[0]);
+    var link=document.createElement('a');
+        link.href = image.src;
+        link.download="C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\images\\"
+         + document.getElementById("name").value +"_logo";
+        //link.target= "C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\images"
+        link.click();
+
+
+    
+};  
+
+
+var allManager;
+var select = document.getElementById("managerSelect");
+//var option = document.createElement("option");
+document.getElementById("managerInfo").style.visibility='hidden';
+$(document).ready(function(){
+    $.ajax({
+		async : false,
+		url : "rest/users/getAllManagerWithNoRestaurant",
+		type : 'GET',
+		dataType : 'json',
+		success : function(data) {
+			if (data) {
+				allManager = data;
+			}
+		},
+		error : function(errorThrown) {
+			toastr.error(errorThrown.responseText);
+		}
+	});
+
+    
+    console.log(allManager);
+    if(allManager.length == 0)
+    {
+        var option = document.createElement("option");
+
+        console.log("Ne poostoji menager bez restorana");
+        option.value = "empty";
+        option.text = "Doestn exists manager without Restaurant!";
+        select.appendChild(option);
+        document.getElementById("managerSelect").disabled = true;
+       
+    }
+    else
+    {
+        for (const man of allManager)
+        {                         
+            var option = document.createElement("option");            
+            console.log("{ostoji menager bez restorana")           
+            option.value = man.username;
+            option.text = man.name+ " " + man.lastname;
+            select.appendChild(option);
+            document.getElementById("managerSelect").disabled = false;           
+        }
+    }
+});
+
+
+function saveRestaurant()
+{
+    var name = document.getElementById("name").value;
+    var type = document.getElementById("type").value;
+    var status = document.getElementById("status").value;
+    var width = document.getElementById("width").value;
+    var length = document.getElementById("height").value;
+    var address = document.getElementById("address").value;
+    var number = document.getElementById("number").value;
+    var city = document.getElementById("city").value;
+    var postCode = document.getElementById("postCode").value;
+    var grade = document.getElementById("grade").value;
+    //var logo = document.getElementById("logo").value;
+    var slika = $('#output').attr('src');
+    var username = document.getElementById("managerSelect").value;
+    console.log(username);
+
+    var savedRestaurant; 
+ $.ajax({
+	type : "POST",
+	url : "rest/restaurant/saveRestaurant",
+	data : JSON.stringify({
+		name : name,
+        type: type,
+		status : status,		
+        width : width,
+        length : length,
+        addressName: address,
+        number: number,
+        city: city,
+        postCode: postCode,
+        grade: grade
+    }),
+
+	contentType : "application/json",
+	dataType : 'json',
+	success : function(data) {	
+            saveRestaurant = data;    
+			            
+            $.ajax({
+                    type : "POST",
+                    url : "rest/restaurant/saveRestaurantToManager",
+                    data : JSON.stringify({
+                        username : username,
+                        idRestaurant: data.id
+                    
+                    }),
+
+                    contentType : "application/json",
+                    dataType : 'json',
+                    success : function(data) {          
+                            alert("Succeseffully registrated restaurant and added Manager!");                      
+                            $(location).attr('href', 'http://localhost:8080/PocetniREST/admin.html');                   
+                    },
+                    error : function(message) {
+                        console.log(message.responseText);
+                        alert(message.responseText);
+                    }
+                });        
+                     
+	},
+	error : function(message) {
+		console.log(message.responseText);
+		alert(message.responseText);
+	}
+});
+
+}
+
+function myFunction()
+{
+console.log("registrovan manager");
+var name = document.getElementById("managerName").value;
+var lastname = document.getElementById("managerLastname").value;
+var username = document.getElementById("managerUsername").value;
+var birthday = document.getElementById("managerBirthday").value; //new Date(document.getElementById("managerBirthday").value);
+var password = document.getElementById("password").value;
+var passwordRepeat = document.getElementById("passwordrepeat").value;
+var gender = $("input:radio[name=radiobtn]:checked").val()
+
+console.log(name + " " +gender);
+
+if(gender == "Male")
+	gender = "MALE";
+else
+	gender = "FEMALE";
+
+var role = "MANAGER"
+
+$.ajax({
+	type : "POST",
+	url : "rest/users/saveGuest",
+	data : JSON.stringify({
+		role : role,
+		username : username,
+		password : password,
+		name : name,
+		lastname : lastname,
+		gender : gender,
+		birthday : birthday		
+	}),
+	contentType : "application/json",
+	dataType : 'json',
+	success : function(data) {		
+			console.log(data);
+			alert("Succeseffully registrated!")
+            var select = document.getElementById("managerSelect")
+            var option = document.createElement("option");
+            option.value = username;
+            option.text = name+ " " + lastname;
+            option.selected = username;
+            select.appendChild(option);
+            document.getElementById("managerInfo").style.visibility='hidden';            
+	},
+	error : function(message) {
+		console.log(message.responseText);
+		alert(message.responseText);
+	}
+});
+
+}
+
+function addManager()
+{
+    console.log("add manager");
+    document.getElementById("managerInfo").style.visibility='visible';
+    
+    
+
+
+}
+
+function cancel()
+{
+    document.getElementById("managerInfo").style.visibility='hidden';
+}
+
+function back()
+{
+    $(location).attr('href', 'http://localhost:8080/PocetniREST/admin.html');
+}
+
 </script>
+
+<style>
+.managerInfo
+{   margin: 0 auto;
+    width: 300px;
+    height: 500px;
+}
+
+</style>

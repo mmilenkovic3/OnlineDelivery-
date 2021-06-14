@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Gender;
@@ -105,22 +107,17 @@ public class UserRepository {
 		{
 			for(User user : users)
 		
-		{
-
-				System.out.println("username:" + user.getUsername());
-				System.out.println("username iz file:" + data.get("username").toString());
+		{				
 			if((user.getUsername()).contentEquals(data.get("username")))
-			{
+			{				
 				
-				System.out.println("Nasao usera za edit u repository!");
 				user.setName(data.get("name"));
 				user.setLastname(data.get("lastname"));										
 				try {
 					user.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(data.get("birthday")));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
+					e.printStackTrace();			} 
 								
 				
 				if(data.get("gender").equals("MALE"))
@@ -129,9 +126,7 @@ public class UserRepository {
 					user.setGender(Gender.FEMALE);
 				
 				user.setUsername(data.get("username"));				
-				editedU = user;
-				System.out.println("Edited:" + editedU);
-				System.out.println("User:" + user);
+				editedU = user;				
 				break;
 			}
 		}
@@ -144,6 +139,26 @@ public class UserRepository {
 		}
 		return null;
 		
+		
+	}
+	
+	public static void addRestaurantToManager(HashMap<String,String> data) throws IOException
+	{
+		//salje username usera i idRestorana
+		ArrayList<User> users = UserRepository.GetAllUsers();
+		for(User u : users)
+		{
+			if(u.getUsername().equals(data.get("username")))
+			{
+				System.out.println("Pronasao usera kome ce da dodeli restoran.");
+				u.setIdRestaurant(Integer.parseInt(data.get("idRestaurant")));
+				
+				
+				
+			}
+		}		
+		
+		objMapper.writeValue(Paths.get(pathUsers).toFile(), users);
 		
 	}
 	

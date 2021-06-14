@@ -81,7 +81,7 @@ console.log("USPESNO POZVATO");
 name = document.getElementById("name").value;
 lastname = document.getElementById("lastname").value;
 username = document.getElementById("username").value;
-birthday = document.getElementById("birthday").value;
+birthday = JSON.stringify(new Date(document.getElementById("birthday").value));
 password = document.getElementById("password").value;
 role = $("input:radio[name=radiobtnRole]:checked").val();
 passwordRepeat = document.getElementById("passwordrepeat").value;
@@ -127,7 +127,7 @@ $.ajax({
 		console.log(message.responseText);
 		alert(message.responseText);
 	}
-})
+});
 
 }
 

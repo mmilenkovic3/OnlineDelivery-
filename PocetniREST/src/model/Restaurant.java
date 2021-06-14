@@ -12,11 +12,27 @@ public class Restaurant {
 	private ArrayList<Integer> articles; 
 	private Status status;
 	private Location location;
-	private String logo;
+	private double grade;
+	private String logo;	
 	
+
 	private Restaurant() {}
+	
+	public Restaurant(int id,String name, RestaurantType type, Status status,double grade, Location location) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.articles = new ArrayList<Integer>();
+		this.status = status;
+		this.location = location;
+		this.grade = grade;
+		this.logo = "prazno.jpg";
+	}
+	
+	
 	public Restaurant(int id, String name, RestaurantType type, ArrayList<Integer> articles, Status status,
-			Location location, String logo) {
+			Location location, double grade, String logo) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -24,8 +40,19 @@ public class Restaurant {
 		this.articles = articles;
 		this.status = status;
 		this.location = location;
+		this.grade = grade;
 		this.logo = logo;
 	}
+	
+	
+	public double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -69,10 +96,6 @@ public class Restaurant {
 		this.logo = logo;
 	}
 	
-	@Override
-	public String toString() {
-		return "Restaurant [id=" + id + ", name=" + name + ", type=" + type + ", articles=" + articles + ", status="
-				+ status + ", location=" + location + ", logo=" + logo + "]";
-	}
+	
 	
 }

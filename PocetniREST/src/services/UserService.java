@@ -3,6 +3,7 @@ package services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -15,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import helpers.HelpersMethods;
-import model.Gender;
 import model.Role;
 import model.User;
 import repository.UserRepository;
@@ -39,15 +39,18 @@ public class UserService {
 	@POST
 	@Path("/saveGuest")
 	public Response saveGuest(User user) throws IOException {
+		System.out.println(user);
 		
-
+		System.out.println("Usao je u snimanje");
+		System.out.println(user.getBirthday());
+		System.out.println(user.getRole());
+		
+		
 		if(UserRepository.UniqueUsername(user.getUsername()))
-		{		
-			if((user.getRole() == Role.MANAGER || user.getRole() == Role.DELIVERER ) && loggedUser.getRole() != Role.ADMIN)
-				return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
-			User u = UserRepository.saveGuest(user);				
-			return Response.status(200).entity(u).build();
-		}		
+		{	User u = UserRepository.saveGuest(user);
+				return Response.status(200).entity(u).build();
+		}
+		
 		return Response.status(400).entity("User with that username already Exists! Please write another one.").build();
 			
 		
@@ -89,7 +92,8 @@ public class UserService {
 	}
 	
 	@GET
-	@Path("/getAllManager")
+	@Path("/getAllManagerWithNoRestaurant")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAllManager()
 	{
 		System.out.println("Get all manager, pozvan");
@@ -98,12 +102,22 @@ public class UserService {
 		
 		for(User manager : UserRepository.GetAllUsers())
 		{
-			if(manager.getRole().equals("MANAGER"))
-				managerList.add(manager);
+			System.out.println(manager.getRole());
+			if(manager.getRole().equals(Role.MANAGER))
+			{
+				if(manager.getIdRestaurant() == 0)
+					managerList.add(manager);
+			
+			}
+				
 		}
 		
 		return Response.status(200).entity(managerList).build();
 	}
+	
+	
+	
+	
 	
 	
 	@GET

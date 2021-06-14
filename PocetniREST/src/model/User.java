@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class User {
 	
 	private Role role;
@@ -11,6 +13,7 @@ public class User {
 	private String name;
 	private String lastname;
 	private Gender gender;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	
 	private ArrayList<Order> allOrder;
