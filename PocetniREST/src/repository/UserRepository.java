@@ -142,6 +142,8 @@ public class UserRepository {
 		
 	}
 	
+	
+	
 	public static void addRestaurantToManager(HashMap<String,String> data) throws IOException
 	{
 		//salje username usera i idRestorana

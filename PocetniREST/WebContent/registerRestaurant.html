@@ -61,7 +61,7 @@
     </tr>
     <tr>
         <td> Grade: </td>
-        <td> <select type="text" id="grade"></select></td>
+        <td> <input type="text" id="grade"></input></td>
          </tr>
     <tr>
         <!--<td> Upload logo: </td>
@@ -285,7 +285,7 @@ function saveRestaurant()
                     dataType : 'json',
                     success : function(data) {          
                             alert("Succeseffully registrated restaurant and added Manager!");                      
-                            $(location).attr('href', 'http://localhost:8080/PocetniREST/admin.html');                   
+                            $(location).attr('href','http://localhost:8080/PocetniREST/admin.html');                   
                     },
                     error : function(message) {
                         console.log(message.responseText);

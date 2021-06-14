@@ -112,4 +112,55 @@ public class RestaurantService {
 		
 		
 	}
+	
+	@GET
+	@Path("/searchByName")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchByName(HashMap<String, String> name) throws IOException {		
+		
+			System.out.println("search by name)");			
+			return Response.status(200).entity(RestaurantRepository.searchByName(name)).build();
+		
+		
+		
+	}
+	
+	@GET
+	@Path("/searchByGrade")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchByGrade(HashMap<String, String> grade) throws IOException {		
+		
+			System.out.println("search by grade");			
+			return Response.status(200).entity(RestaurantRepository.searchByGrade(grade)).build();	
+		
+	}
+	
+	@GET
+	@Path("/searchByType")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchByType(HashMap<String, String> type) throws IOException {		
+		
+			System.out.println("search by type)");			
+			return Response.status(200).entity(RestaurantRepository.searchByType(type)).build();
+		
+		
+		
+	}
+
+	@GET
+	@Path("/searchByCity")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchByCity(HashMap<String, String> city) throws IOException {		
+		
+			System.out.println("search by name)");			
+			return Response.status(200).entity(RestaurantRepository.searchByCity(city)).build();
+		
+		
+		
+	}
+
 }

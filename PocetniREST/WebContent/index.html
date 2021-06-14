@@ -23,7 +23,18 @@
     </div>
   </div>
   
-  <div class="restaurant-container" id="restaurantContainer">
+  <div class="restaurant-container" id="restaurantContainer">     
+      <table id="search">
+          <tr>
+              <td> 
+                <input type="text" id="searchByName" class="form-control" />
+              </td>
+              <td>
+                <button type="submit" onclick="searchByName(); return false;"  class="btn btn-primary mb-2"> Search by name </button>
+              </td>
+          </tr>
+      </table>
+      
         <div class="row" id="row">
             
         </div>
@@ -72,19 +83,37 @@
 
             var panelheading = document.createElement('div');            
             panelheading.className = 'panel-heading';
-            panelheading.style.fontSize = "22px";
+            panelheading.style.fontSize = "25px";
             panelheading.style.color = "black"; 
-            panelheading.textContent = restaurantList[one].name;
+            panelheading.textContent = restaurantList[one].name ;
+            var gradepanel = document.createElement('h4');
+            gradepanel.textContent =   'Grade: ' + restaurantList[one].grade;
+            panelheading.appendChild(gradepanel);
 
             var panelbody = document.createElement('div');
+            var type = document.createElement('h4');
+            type.textContent = restaurantList[one].type;
+            panelbody.appendChild(type);
+
             var address = document.createElement('h4');
-            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number;
+            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number +', ' + restaurantList[one].location.address.city; 
             panelbody.appendChild(address);
+
             var status = document.createElement('h5');
-            status.textContent = restaurantList[one].location.address.city;
+            status.textContent = restaurantList[one].status;
             panelbody.appendChild(status);
             panelbody.className = 'panel-body';
             //SADRZAJ
+
+            var divImage = document.createElement('img');
+            divImage.src = restaurantList[one].logo;
+            divImage.style.width = "80px";
+            divImage.style.height = "80px";
+            divImage.style.marginLeft = "80%";
+            divImage.style.marginTop = "-70px";
+
+            panelbody.appendChild(divImage);
+
 
             var panelfooter = document.createElement('div');
             panelfooter.className = 'panel-footer';
@@ -101,6 +130,12 @@
             divRow.appendChild(iDiv);
 
 
+
+    }
+
+    searchByName()
+    {
+        var inputName = document.getElementById("searchByName").value;
 
     }
 
@@ -127,6 +162,11 @@ body
 {
     background-image: url('./images/back.jpg');
     
+}
+
+#search
+{
+    margin-bottom: 20px;
 }
 
 

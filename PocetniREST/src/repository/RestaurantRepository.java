@@ -25,6 +25,7 @@ import dto.RestaurantDTO;
 import model.Address;
 import model.Location;
 import model.Restaurant;
+import model.RestaurantType;
 import model.User;
 
 public class RestaurantRepository {
@@ -109,6 +110,72 @@ public class RestaurantRepository {
 		    // I decided to replace already existing files with same name
 		
 	
+	}
+	
+	public static ArrayList<Restaurant> searchByName(HashMap<String, String> name)
+	{
+		ArrayList<Restaurant> newList = new ArrayList<Restaurant>();
+		for(Restaurant r : GetAllRestaurant())
+		{
+			if(r.getName().startsWith(name.get("name")))
+				newList.add(r);
+			
+		}
+		
+		return newList;
+	}
+	
+	public static ArrayList<Restaurant> searchByType(HashMap<String, String> type)
+	{
+		System.out.println(type.get("type"));
+		RestaurantType rType = null;
+			if(type.get("type").equals("CHINES"))
+				rType = RestaurantType.CHINES;
+			else if(type.get("type").equals("MEXICAN"))
+				rType = RestaurantType.MEXICAN;
+			else if(type.get("type").equals("ITALIAN"))
+				rType = RestaurantType.ITALIAN;
+			
+			
+			
+		ArrayList<Restaurant> newList = new ArrayList<Restaurant>();
+		for(Restaurant r : GetAllRestaurant())
+		{
+			if(r.getType().equals(rType))
+			{
+				newList.add(r);
+			}
+				
+			
+		}
+		
+		return newList;
+	}
+	
+	public static ArrayList<Restaurant> searchByCity(HashMap<String, String> city)
+	{
+		ArrayList<Restaurant> newList = new ArrayList<Restaurant>();
+		for(Restaurant r : GetAllRestaurant())
+		{
+			if(r.getLocation().getAddress().getCity().startsWith(city.get("city")))
+				newList.add(r);
+			
+		}
+		
+		return newList;
+	}
+	
+	public static ArrayList<Restaurant> searchByGrade(HashMap<String, String> grade)
+	{
+		ArrayList<Restaurant> newList = new ArrayList<Restaurant>();
+		for(Restaurant r : GetAllRestaurant())
+		{
+			if(r.getGrade() == Double.parseDouble(grade.get("grade")))
+				newList.add(r);
+			
+		}
+		
+		return newList;
 	}
 	
 	
