@@ -143,7 +143,7 @@ public class RestaurantService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchByType(HashMap<String, String> type) throws IOException {		
 		
-			System.out.println("search by type)");			
+			System.out.println("search by type)");				
 			return Response.status(200).entity(RestaurantRepository.searchByType(type)).build();
 		
 		
