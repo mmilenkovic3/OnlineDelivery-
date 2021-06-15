@@ -113,51 +113,64 @@ public class RestaurantService {
 		
 	}
 	
-	@GET
+	@POST
 	@Path("/searchByName")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchByName(HashMap<String, String> name) throws IOException {		
 		
-			System.out.println("search by name)");			
-			return Response.status(200).entity(RestaurantRepository.searchByName(name)).build();
+			System.out.println("search by name)");	
+			ArrayList<Restaurant> restaurantsByName = RestaurantRepository.searchByName(name);
+			if(restaurantsByName == null)
+				return Response.status(401).entity("EMPTY").build();
+			
+			return Response.status(200).entity(restaurantsByName).build();
 		
 		
 		
 	}
 	
-	@GET
+	@POST
 	@Path("/searchByGrade")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchByGrade(HashMap<String, String> grade) throws IOException {		
 		
-			System.out.println("search by grade");			
-			return Response.status(200).entity(RestaurantRepository.searchByGrade(grade)).build();	
+			System.out.println("search by grade");	
+			ArrayList<Restaurant> restaurantsByGrade = RestaurantRepository.searchByGrade(grade);
+			if(restaurantsByGrade == null)
+				return Response.status(401).entity("EMPTY").build();
+			return Response.status(200).entity(restaurantsByGrade).build();	
 		
 	}
 	
-	@GET
+	@POST
 	@Path("/searchByType")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchByType(HashMap<String, String> type) throws IOException {		
 		
-			System.out.println("search by type)");				
-			return Response.status(200).entity(RestaurantRepository.searchByType(type)).build();
+			System.out.println("search by type)");	
+			ArrayList<Restaurant> restaurantsByType = RestaurantRepository.searchByType(type);
+			if(restaurantsByType == null)
+				return Response.status(401).entity("EMPTY").build();
+			return Response.status(200).entity(restaurantsByType).build();
 		
 		
 		
 	}
 
-	@GET
+	@POST
 	@Path("/searchByCity")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchByCity(HashMap<String, String> city) throws IOException {		
 		
-			System.out.println("search by name)");			
-			return Response.status(200).entity(RestaurantRepository.searchByCity(city)).build();
+			System.out.println("search by name)");
+			ArrayList<Restaurant> restaurantsByCity = RestaurantRepository.searchByCity(city);
+			if(restaurantsByCity == null)
+				return Response.status(401).entity("EMPTY").build();
+			return Response.status(200).entity(restaurantsByCity).build();
 		
 		
 		

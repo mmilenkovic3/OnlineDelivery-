@@ -24,13 +24,38 @@
   </div>
   
   <div class="restaurant-container" id="restaurantContainer">     
-      <table id="search">
+      <table id="search" style="width: 100%;">
           <tr>
               <td> 
-                <input type="text" id="searchByName" class="form-control" />
+                <input type="text" id="byName" class="form-control" />
               </td>
               <td>
-                <button type="submit" onclick="searchByName(); return false;"  class="btn btn-primary mb-2"> Search by name </button>
+                <button type="submit" onclick="nameSearch(); return false;"  class="btn btn-primary mb-2"> Search by name </button>
+              </td>
+              <td style="margin-left: 10px;"> 
+                <input type="text" id="byGrade" class="form-control" />
+              </td>
+              <td>
+                <button type="submit" onclick="gradeSearch(); return false;"  class="btn btn-primary mb-2"> Search by grade </button>
+              </td>
+
+              <td style="margin-left: 10px;"> 
+                <input type="text" id="byCity" class="form-control" />
+              </td>
+              <td>
+                <button type="submit" onclick="citySearch(); return false;"  class="btn btn-primary mb-2"> Search by city </button>
+              </td>
+
+
+              <td style="margin-left: 10px;" > 
+                <select  id="byType" class="form-control">
+                    <option> CHINES </option>
+                    <option> MEXICAN </option>
+                    <option> ITALIAN </option>
+                </select> 
+              </td>
+              <td>
+                <button type="submit" onclick="typeSearch(); return false;"  class="btn btn-primary mb-2"> Search by type </button>
               </td>
           </tr>
       </table>
@@ -43,9 +68,10 @@
 </body>
 </html>
 <script>
+    var restaurantList;
     $(document).ready(function(){
 
-        var restaurantList;
+        
 
         $.ajax({
 		async : false,
@@ -133,11 +159,7 @@
 
     }
 
-    searchByName()
-    {
-        var inputName = document.getElementById("searchByName").value;
-
-    }
+   
 
    
 
@@ -155,6 +177,419 @@
 
 
     });
+    
+    function typeSearch()
+    {
+        var type = document.getElementById("byType").value;
+        console.log(type);
+        var divRow = document.getElementById('row');
+        var restaurantList;
+        while(divRow.firstChild){
+            divRow.removeChild(divRow.firstChild);
+        }
+
+            $.ajax({
+            async : false,
+            url : "rest/restaurant/searchByType",
+            type : 'POST',
+            data : JSON.stringify({
+                type : type
+            })	             
+            ,
+            dataType : 'json',
+            contentType: 'application/json',                   
+            success : function(data) {
+                if (data) {
+                    console.log(data);
+                    restaurantList = data;
+                }
+            },
+            error : function(errorThrown) {
+                alert(errorThrown.responseText);
+            }
+            });
+          
+        
+
+            for(let one= restaurantList.length - 1; one >= 0; one--)
+    {
+            //console.log(restaurantList[one]);
+            var iDiv = document.createElement('div');
+            iDiv.id = restaurantList[one].id;
+            iDiv.className = 'col-sm-4';
+           
+            var panelprimary = document.createElement('div');            
+            panelprimary.className = 'panel panel-primary';
+
+
+            var panelheading = document.createElement('div');            
+            panelheading.className = 'panel-heading';
+            panelheading.style.fontSize = "25px";
+            panelheading.style.color = "black"; 
+            panelheading.textContent = restaurantList[one].name ;
+            var gradepanel = document.createElement('h4');
+            gradepanel.textContent =   'Grade: ' + restaurantList[one].grade;
+            panelheading.appendChild(gradepanel);
+
+            var panelbody = document.createElement('div');
+            var type = document.createElement('h4');
+            type.textContent = restaurantList[one].type;
+            panelbody.appendChild(type);
+
+            var address = document.createElement('h4');
+            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number +', ' + restaurantList[one].location.address.city; 
+            panelbody.appendChild(address);
+
+            var status = document.createElement('h5');
+            status.textContent = restaurantList[one].status;
+            panelbody.appendChild(status);
+            panelbody.className = 'panel-body';
+            //SADRZAJ
+
+            var divImage = document.createElement('img');
+            divImage.src = restaurantList[one].logo;
+            divImage.style.width = "80px";
+            divImage.style.height = "80px";
+            divImage.style.marginLeft = "80%";
+            divImage.style.marginTop = "-70px";
+
+            panelbody.appendChild(divImage);
+
+
+            var panelfooter = document.createElement('div');
+            panelfooter.className = 'panel-footer';
+
+
+            var p = document.createElement('p');
+            p.textContent = restaurantList[one].name;
+           
+          
+            panelprimary.appendChild(panelheading);
+            panelprimary.appendChild(panelbody);
+            panelprimary.appendChild(panelfooter);
+            iDiv.appendChild(panelprimary);
+            divRow.appendChild(iDiv);
+
+
+
+        }    
+    }
+
+    function citySearch()
+    {
+        var city = document.getElementById("byCity").value;
+        if(city == "")
+            {   
+                alert("City input is empty!");
+                return false;
+            }
+        else{
+            var divRow = document.getElementById('row');
+        var restaurantList;
+        while(divRow.firstChild){
+            divRow.removeChild(divRow.firstChild);
+        }
+
+            $.ajax({
+            async : false,
+            url : "rest/restaurant/searchByCity",
+            type : 'POST',
+            data : JSON.stringify({
+                city : city
+            })	             
+            ,
+            dataType : 'json',
+            contentType: 'application/json',                   
+            success : function(data) {
+                if (data) {
+                    console.log(data);
+                    restaurantList = data;
+                }
+            },
+            error : function(errorThrown) {
+                alert(errorThrown.responseText);
+            }
+            });
+          
+        
+
+            for(let one= restaurantList.length - 1; one >= 0; one--)
+    {
+            //console.log(restaurantList[one]);
+            var iDiv = document.createElement('div');
+            iDiv.id = restaurantList[one].id;
+            iDiv.className = 'col-sm-4';
+           
+            var panelprimary = document.createElement('div');            
+            panelprimary.className = 'panel panel-primary';
+
+
+            var panelheading = document.createElement('div');            
+            panelheading.className = 'panel-heading';
+            panelheading.style.fontSize = "25px";
+            panelheading.style.color = "black"; 
+            panelheading.textContent = restaurantList[one].name ;
+            var gradepanel = document.createElement('h4');
+            gradepanel.textContent =   'Grade: ' + restaurantList[one].grade;
+            panelheading.appendChild(gradepanel);
+
+            var panelbody = document.createElement('div');
+            var type = document.createElement('h4');
+            type.textContent = restaurantList[one].type;
+            panelbody.appendChild(type);
+
+            var address = document.createElement('h4');
+            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number +', ' + restaurantList[one].location.address.city; 
+            panelbody.appendChild(address);
+
+            var status = document.createElement('h5');
+            status.textContent = restaurantList[one].status;
+            panelbody.appendChild(status);
+            panelbody.className = 'panel-body';
+            //SADRZAJ
+
+            var divImage = document.createElement('img');
+            divImage.src = restaurantList[one].logo;
+            divImage.style.width = "80px";
+            divImage.style.height = "80px";
+            divImage.style.marginLeft = "80%";
+            divImage.style.marginTop = "-70px";
+
+            panelbody.appendChild(divImage);
+
+
+            var panelfooter = document.createElement('div');
+            panelfooter.className = 'panel-footer';
+
+
+            var p = document.createElement('p');
+            p.textContent = restaurantList[one].name;
+           
+          
+            panelprimary.appendChild(panelheading);
+            panelprimary.appendChild(panelbody);
+            panelprimary.appendChild(panelfooter);
+            iDiv.appendChild(panelprimary);
+            divRow.appendChild(iDiv);
+
+
+
+        }
+
+
+        }
+    }
+
+    function nameSearch()
+    {
+        var inputName = document.getElementById("byName").value;
+        console.log(inputName);
+
+        if(inputName == "")
+            {   
+                alert("Name input is empty!");
+                return false;
+            }
+        else{
+
+        var restaurantList;
+        var divRow = document.getElementById('row');
+        while(divRow.firstChild){
+            divRow.removeChild(divRow.firstChild);
+        }
+
+            $.ajax({
+            async : false,
+            url : "rest/restaurant/searchByName",
+            type : 'POST',
+            data : JSON.stringify({
+                name : inputName
+            })	             
+            ,
+            dataType : 'json',
+            contentType: 'application/json',                   
+            success : function(data) {
+                if (data) {
+                    console.log(data);
+                    restaurantList = data;
+                }
+            },
+            error : function(errorThrown) {
+                alert(errorThrown.responseText);
+            }
+            });
+          
+        
+
+            for(let one= restaurantList.length - 1; one >= 0; one--)
+    {
+            //console.log(restaurantList[one]);
+            var iDiv = document.createElement('div');
+            iDiv.id = restaurantList[one].id;
+            iDiv.className = 'col-sm-4';
+           
+            var panelprimary = document.createElement('div');            
+            panelprimary.className = 'panel panel-primary';
+
+
+            var panelheading = document.createElement('div');            
+            panelheading.className = 'panel-heading';
+            panelheading.style.fontSize = "25px";
+            panelheading.style.color = "black"; 
+            panelheading.textContent = restaurantList[one].name ;
+            var gradepanel = document.createElement('h4');
+            gradepanel.textContent =   'Grade: ' + restaurantList[one].grade;
+            panelheading.appendChild(gradepanel);
+
+            var panelbody = document.createElement('div');
+            var type = document.createElement('h4');
+            type.textContent = restaurantList[one].type;
+            panelbody.appendChild(type);
+
+            var address = document.createElement('h4');
+            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number +', ' + restaurantList[one].location.address.city; 
+            panelbody.appendChild(address);
+
+            var status = document.createElement('h5');
+            status.textContent = restaurantList[one].status;
+            panelbody.appendChild(status);
+            panelbody.className = 'panel-body';
+            //SADRZAJ
+
+            var divImage = document.createElement('img');
+            divImage.src = restaurantList[one].logo;
+            divImage.style.width = "80px";
+            divImage.style.height = "80px";
+            divImage.style.marginLeft = "80%";
+            divImage.style.marginTop = "-70px";
+
+            panelbody.appendChild(divImage);
+
+
+            var panelfooter = document.createElement('div');
+            panelfooter.className = 'panel-footer';
+
+
+            var p = document.createElement('p');
+            p.textContent = restaurantList[one].name;
+           
+          
+            panelprimary.appendChild(panelheading);
+            panelprimary.appendChild(panelbody);
+            panelprimary.appendChild(panelfooter);
+            iDiv.appendChild(panelprimary);
+            divRow.appendChild(iDiv);
+
+
+
+        }    
+
+    }
+
+    }
+
+    function gradeSearch()
+    {
+        var grade = document.getElementById("byGrade").value;
+        var restaurantList = null;
+        var divRow = document.getElementById('row');
+        if(grade == "")
+            {   
+                alert("Grade input is empty!");
+                return false;
+            }
+        else{
+        while(divRow.firstChild){
+            divRow.removeChild(divRow.firstChild);
+        }
+
+            $.ajax({
+            async : false,
+            url : "rest/restaurant/searchByGrade",
+            type : 'POST',
+            data : JSON.stringify({
+		        grade : grade,        
+            }),
+            dataType : 'json',
+            contentType: 'application/json',
+            success : function(data) {
+                if (data) {
+                    console.log(data);
+                    restaurantList = data;
+                }
+            },
+            error : function(errorThrown) {
+                alert(errorThrown.responseText);
+            }
+            });
+            
+
+            for(let one= restaurantList.length - 1; one >= 0; one--)
+    {
+            //console.log(restaurantList[one]);
+            var iDiv = document.createElement('div');
+            iDiv.id = restaurantList[one].id;
+            iDiv.className = 'col-sm-4';
+           
+            var panelprimary = document.createElement('div');            
+            panelprimary.className = 'panel panel-primary';
+
+
+            var panelheading = document.createElement('div');            
+            panelheading.className = 'panel-heading';
+            panelheading.style.fontSize = "25px";
+            panelheading.style.color = "black"; 
+            panelheading.textContent = restaurantList[one].name ;
+            var gradepanel = document.createElement('h4');
+            gradepanel.textContent =   'Grade: ' + restaurantList[one].grade;
+            panelheading.appendChild(gradepanel);
+
+            var panelbody = document.createElement('div');
+            var type = document.createElement('h4');
+            type.textContent = restaurantList[one].type;
+            panelbody.appendChild(type);
+
+            var address = document.createElement('h4');
+            address.textContent = restaurantList[one].location.address.name +' ' + restaurantList[one].location.address.number +', ' + restaurantList[one].location.address.city; 
+            panelbody.appendChild(address);
+
+            var status = document.createElement('h5');
+            status.textContent = restaurantList[one].status;
+            panelbody.appendChild(status);
+            panelbody.className = 'panel-body';
+            //SADRZAJ
+
+            var divImage = document.createElement('img');
+            divImage.src = restaurantList[one].logo;
+            divImage.style.width = "80px";
+            divImage.style.height = "80px";
+            divImage.style.marginLeft = "80%";
+            divImage.style.marginTop = "-70px";
+
+            panelbody.appendChild(divImage);
+
+
+            var panelfooter = document.createElement('div');
+            panelfooter.className = 'panel-footer';
+
+
+            var p = document.createElement('p');
+            p.textContent = restaurantList[one].name;
+           
+          
+            panelprimary.appendChild(panelheading);
+            panelprimary.appendChild(panelbody);
+            panelprimary.appendChild(panelfooter);
+            iDiv.appendChild(panelprimary);
+            divRow.appendChild(iDiv);
+
+
+
+         } 
+        }
+            
+
+    }
 </script>
 
 <style>
@@ -203,7 +638,7 @@ body
 
     .btn
     {
-        background-color: #ec93bf;
+        background-color: #a175d7;
     }
 
     .panel-primary > .panel-heading
