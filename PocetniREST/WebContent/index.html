@@ -180,6 +180,7 @@
     
     function typeSearch()
     {
+
         var type = document.getElementById("byType").value;
         console.log(type);
         var divRow = document.getElementById('row');
@@ -490,6 +491,22 @@
 
     function gradeSearch()
     {
+        var tr = document.createElement('tr');
+        var tdLabel = document.createElement('td');
+        var tdButton = document.createElement('td');
+
+
+
+        var btn = document.createElement('button');
+        btn.className="btn";
+        btn.textContent = "Show OPEN restaurant";
+
+        tdButton.appendChild(btn);
+        tr.appendChild(tdButton);
+        tr.appendChild(tdLabel);
+        document.getElementById("search").appendChild(tr);
+
+
         var grade = document.getElementById("byGrade").value;
         var restaurantList = null;
         var divRow = document.getElementById('row');

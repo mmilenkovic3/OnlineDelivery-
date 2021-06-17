@@ -2,8 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Rent apartment</title>
-
+<title>Online delivery</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="jquery-3.3.1.min.js"> </script>
 <script src="admin.js"> </script>
 </head>
@@ -16,29 +19,49 @@
 <br> 
 <button id="registerNewRestaurant" onclick="regNewRest()"> Add new Restaurant </button>
 <br>
-<table id="allUsers">
- <tr>
- <th> ROLE </th>
- <th> USERNAME </th>
- <th> NAME </th>
 
+<input type="text" id="nameSearch2" onkeyup="searchByName(2)" placeholder="Search by name.. "/>
+<input type="text" id="nameSearch3" onkeyup="searchByName(3)" placeholder="Search by lastname.. "/>
+<input type="text" id="nameSearch1" onkeyup="searchByName(1)" placeholder="Search by username.. "/>
+ <select  id="byType" class="form-control">
+                    <option> CHINES </option>
+                    <option> MEXICAN </option>
+                    <option> ITALIAN </option>
+                </select> 
+ <button type="submit" onclick="typeSearch(); return false;"  class="btn btn-primary mb-2"> Search by type </button>
+             
+
+<table id="allUsers"  class="table table-bordered">
+ <thead>
+ <tr> 
+ <th > ROLE </th>
+ <th onclick="sortUsername(); return false;" > USERNAME </th>
+ <th onclick="sortName(); return false;" > NAME </th>
+<th onclick="sortLastname(); return false;" > LASTNAME </th>
  <th>GENDER</th>
  <th> BIRTHDAY </th>
- 
- </tr>
+ <th onclick="sortPoints(); return false;"> POINTS </th>
+	<th> USER TYPE </th>
+	</tr>
+	</thead>
+	
+ <tbody id="tbodyId"></tbody>
+
 
 
 </table>
+<input type="hidden" id="name_order" value="asc">
+<input type="hidden" id="age_order" value="asc">
 <br>
 <h1> 
     User account info: 
 </h1>
 
 <div>
-    <form id="changeProfile">
-        <table>
+    <form id="changeProfile" >
+        <table >
         <tr>
-            <td> Name: </td>
+            <td > Name: </td>
             <td> <input type="text" id="name"  /> </td>
         </tr>
         <tr>
@@ -88,3 +111,22 @@
 
 
 </html>
+<!-- <script src="table-sort.js"></script> -->
+
+<script src="mySort.js"> </script>
+<style>
+#allUsers
+{ 	
+	margin: 0 auto;
+	width: 80%;
+	background-color: white;
+}
+
+#allUsers th {
+  cursor: pointer;
+}
+
+
+
+
+</style>

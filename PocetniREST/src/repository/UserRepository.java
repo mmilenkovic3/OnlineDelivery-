@@ -6,14 +6,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Gender;
+import model.Restaurant;
 import model.Role;
 import model.User;
 
@@ -164,6 +167,51 @@ public class UserRepository {
 		
 	}
 	
+	public static ArrayList<User> sortAscName()
+	{
+		ArrayList<User> list = UserRepository.GetAllUsers(); 
+		list.sort(Comparator.comparing(User::getName));
+		return list;
+	}
+	public ArrayList<User> sortDescName()
+	{
+		ArrayList<User> list = UserRepository.GetAllUsers(); 
+		list.sort(Comparator.comparing(User::getName).reversed());
+		return list;
+	}
+	
+	public static ArrayList<User> sortAscUsername()
+	{
+		ArrayList<User> list = UserRepository.GetAllUsers(); 
+		list.sort(Comparator.comparing(User::getUsername));
+		return list;
+	}
+	
+	public static ArrayList<User> sortByPoints()
+	{
+		ArrayList<User> list = UserRepository.GetAllUsers(); 
+		list.sort(Comparator.comparing(User::getPoints));
+		return list;
+	}
+	
+	public static ArrayList<User> sortByLastName()
+	{
+		ArrayList<User> list = UserRepository.GetAllUsers(); 
+		list.sort(Comparator.comparing(User::getLastname));
+		return list;
+	}
+	
+	public static ArrayList<User> searchByName(HashMap<String, String> name)
+	{
+		ArrayList<User> newList = new ArrayList<User>();
+		for(User r : GetAllUsers())
+		{
+			if(r.getName().startsWith(name.get("name")))
+				newList.add(r);			
+		}
+		
+		return newList;
+	}
 	
 
 }

@@ -16,8 +16,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import helpers.HelpersMethods;
+import model.Restaurant;
 import model.Role;
 import model.User;
+import repository.RestaurantRepository;
 import repository.UserRepository;
 
 @Path("/users")
@@ -154,6 +156,94 @@ public class UserService {
 		}
 			
 	}
+	
+	
+	@GET
+	@Path("/sortAscName")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response SortAscName()
+	{
+		System.out.println("Usao u sort name!");
+		if (GetLoggedUser() == null) {
+			return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
+		}
+		else
+		{
+			return Response.status(200).entity(UserRepository.sortAscName()).build();
+		}
+			
+	}
+	
+	@GET
+	@Path("/sortAscUsername")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response SortAscUsername()
+	{
+		System.out.println("Usao u sort username!");
+		if (GetLoggedUser() == null) {
+			return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
+		}
+		else
+		{
+			return Response.status(200).entity(UserRepository.sortAscUsername()).build();
+		}
+			
+	}
+	
+
+	@GET
+	@Path("/sortAscLastName")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response SortAscLastName()
+	{		
+		if (GetLoggedUser() == null) {
+			return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
+		}
+		else
+		{
+			return Response.status(200).entity(UserRepository.sortByLastName()).build();
+		}
+			
+	}
+	
+
+	@GET
+	@Path("/sortAscPoints")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response SortByPoints()
+	{
+ 	if (GetLoggedUser() == null) {
+			return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
+		}
+		else
+		{
+			return Response.status(200).entity(UserRepository.sortByPoints()).build();
+		}
+			
+	}
+	
+	@POST
+	@Path("/searchByName")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchByName(HashMap<String, String> name) throws IOException {		
+		
+			System.out.println("search by name)");	
+			ArrayList<User> userByName = UserRepository.searchByName(name);
+			if(userByName == null)
+				return Response.status(401).entity("EMPTY").build();
+			
+			return Response.status(200).entity(userByName).build();
+		
+		
+		
+	}
+	
+	
 
 	
 }
