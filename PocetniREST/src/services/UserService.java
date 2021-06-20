@@ -244,6 +244,38 @@ public class UserService {
 	}
 	
 	
+	@POST
+	@Path("/fillterByRole")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response fillterByRole(HashMap<String, String> role) throws IOException {	
+				
+			ArrayList<User> userByRole = UserRepository.fillterByRole(role);
+			if(userByRole == null)
+				return Response.status(401).entity("EMPTY").build();
+			
+			return Response.status(200).entity(userByRole).build();
+		
+		
+		
+	}
+	
+	@POST
+	@Path("/fillterByUserType")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response fillterByUserType(HashMap<String, String> type) throws IOException {	
+				
+			ArrayList<User> userType = UserRepository.fillterByType(type);
+			if(userType == null)
+				return Response.status(401).entity("EMPTY").build();
+			
+			return Response.status(200).entity(userType).build();
+		
+		
+		
+	}
+	
 
 	
 }

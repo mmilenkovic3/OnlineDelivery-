@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Online delivery</title>
+<title>Online delivery - ADMIN PAGE </title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -11,27 +11,126 @@
 <script src="admin.js"> </script>
 </head>
 <body>
-<h1> Admin - Online deilvery </h1>
-</body>
-<button id="regManager" onclick="regManagerAndDeliverer()"> Registration </button>
-<br/>
-<button id="logOut" onclick="logOut()"> Log out </button>
-<br> 
-<button id="registerNewRestaurant" onclick="regNewRest()"> Add new Restaurant </button>
-<br>
+    <div class="admin"> 
+    
+    
 
-<input type="text" id="nameSearch2" onkeyup="searchByName(2)" placeholder="Search by name.. "/>
-<input type="text" id="nameSearch3" onkeyup="searchByName(3)" placeholder="Search by lastname.. "/>
-<input type="text" id="nameSearch1" onkeyup="searchByName(1)" placeholder="Search by username.. "/>
- <select  id="byType" class="form-control">
-                    <option> CHINES </option>
-                    <option> MEXICAN </option>
-                    <option> ITALIAN </option>
-                </select> 
- <button type="submit" onclick="typeSearch(); return false;"  class="btn btn-primary mb-2"> Search by type </button>
-             
+   <div class="buttons">
+        <table style="width:100%; margin-top: 10px; ">
+            <tr>
+                <td>
+                    <button class="btn btn-warning" id="regManager" style=" width:100%; " onclick="regManagerAndDeliverer()"> Manager Registration And Deliverer </button>
+                </td>
+                <td>
+                    <button  class="btn btn-warning" style=" width:100%;"  id="registerNewRestaurant" onclick="regNewRest()"> Add new Restaurant </button>
+                </td>
+                <td>
+                    <button  class="btn btn-warning" style="width:100%;" id="logOut" onclick="logOut()"> Log out </button>  
+                </td>
+            </tr>
+        </table> 
+	</div>
+	
+<div class="userInfo">
+	<h1 style="text-align: center;"> 
+	    User account info: 
+	</h1>
+    <form id="changeProfile" >
+        <table>
+        <tr>
+            <td style="text-align: center; width:200px; font-size:18px;" > Name: </td>
+            <td><input type="text" id="name"   class="form-control" /> </td>
+        </tr>
+        <tr>
+            <td style="text-align: center; font-size:18px;" > Lastname: </td>
+            <td > <input type="text" id="lastname"  class="form-control" > </td>
+        </tr>
+        <tr>
+            <td style="text-align: center; font-size:18px;" >  Gender: </td>
+            <td> <input type="radio" id="male" class="radioBtnClass" value="Male" class="form-control"   name="radiobtn">Male</input>  </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> <input type="radio" id="female" class="radioBtnClass" value="Female" class="form-control"  name="radiobtn">Female</input> </td>
+        </tr>
+        
+        <tr>
+            <td style="text-align: center; font-size:18px;" > Birthday: </td>
+            <td> <input type="date" class="form-control"  id="birthday" placeholder="dd-mm-yyyy" /></td>
+        </tr>
+        <tr>
+            <td style="text-align: center; font-size:18px;" > Username: </td>
+            <td> <input type="text" class="form-control"  id="username"></td>
+        </tr>
+   
+        
+        </table>
+        
+    </form>
+    <br/>
+    <table>
+	    <tr>
+		    <td> <button   style="width:100%;"  class="btn btn-warning" id="edit" onclick="edit()" value="Edit"> Edit</button> </td>
+		    <td> <button   style="width:100%;"  class="btn btn-warning" id="save" onclick="save()" value="Save"> Save</button></td>
+		    <td> <button   style="width:100%;"   class="btn btn-warning" id="cancel" onclick="cancel()" value="Cancel"> Cancel</button> </td>
+		 </tr>
+    </table>    
+   
+</div>
+    
+    
+    
+ 
+	<div class="fillters">
+				  <table >
+		    <tr>
+		        <td><select  id="byRole" class="form-control">
+		            <option> ADMIN </option>
+		            <option> CUSTOMER </option>
+		            <option> DELIVERER </option>                    
+		            <option> MANAGER </option>
+		        </select>  </td>
+		        <td>
+		            <button type="submit" onclick="roleSearch(); return false;" style=" width:100%;"  class="btn btn-primary mb-2"> Fillter by role </button>
+		        </td>
+		  
+		
+		   
+		        <td>
+                    <select  id="byUserType" class="form-control">
+		            <option> GOLDEN </option>
+		            <option> SILVER </option>
+		            <option> BRONZE </option>                               
+		        </select>  </td>
+		        <td>
+		            <button type="submit" onclick="userTypeSearch();  return false;" style=" width:100%;" class="btn btn-primary mb-2"> Fillter by user type </button>
+		        </td>
+		    </tr>
+		    
+		<tr>
+		    <td> 
+		        <input class="form-control" type="text" id="nameSearch2" onkeyup="searchByName(2)" placeholder="Search by name.. "/>
+		    </td>
+		    <td>
+		        <input class="form-control" type="text" id="nameSearch3" onkeyup="searchByName(3)" placeholder="Search by lastname.. "/>
+		    </td>
+		    <td>
+		        <input class="form-control" type="text" id="nameSearch1" onkeyup="searchByName(1)" placeholder="Search by username.. "/>
+		    </td>
+		    <td>
+		        <button type="submit" onclick="cleanFillter(); return false;" style=" width:100%;"  class="btn btn-primary mb-2"> Clean filter & search </button>
+		    </td>
+		
+		</tr>
+		
+		
+		</table>
+       
+       
+	</div>
 
-<table id="allUsers"  class="table table-bordered">
+
+<table id="allUsers"   class="table table-bordered">
  <thead>
  <tr> 
  <th > ROLE </th>
@@ -53,80 +152,66 @@
 <input type="hidden" id="name_order" value="asc">
 <input type="hidden" id="age_order" value="asc">
 <br>
-<h1> 
-    User account info: 
-</h1>
-
-<div>
-    <form id="changeProfile" >
-        <table >
-        <tr>
-            <td > Name: </td>
-            <td> <input type="text" id="name"  /> </td>
-        </tr>
-        <tr>
-            <td> Lastname: </td>
-            <td> <input type="text" id="lastname"> </td>
-        </tr>
-        <tr>
-            <td> Gender: </td>
-            <td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
-        </tr>
-        <tr>
-            <td> </td>
-            <td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
-        </tr>
-        
-        <tr>
-            <td> Birthday: </td>
-            <td> <input type="date" id="birthday" placeholder="dd-mm-yyyy" /></td>
-        </tr>
-        <tr>
-            <td> Username: </td>
-            <td> <input type="text" id="username"></td>
-        </tr>
-        <!--<tr>
-            <td> Password: </td>
-            <td> <input type="password" id="password" style="border-color:red"> </td>
-        </tr>
-        <tr>
-            <td> Password repeat: </td>
-            <td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
-        </tr>
-        <tr colspan="2">
-            <td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
-        </tr>-->
-        
-        </table>
-        
-    </form>
-    <br>
-    <button id="edit" onclick="edit()" value="Edit"> Edit</button>
-    <br>
-
-    <button id="save" onclick="save()" value="Save"> Save</button>
-    <br>
-    <button id="cancel" onclick="cancel()" value="Cancel"> Cancel</button>
-</div>
 
 
+</div> 
+</body>
 </html>
 <!-- <script src="table-sort.js"></script> -->
 
 <script src="mySort.js"> </script>
 <style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
 #allUsers
 { 	
 	margin: 0 auto;
-	width: 80%;
+	width: 100%;
 	background-color: white;
+
 }
 
 #allUsers th {
   cursor: pointer;
 }
 
+.fillters
+{
+    margin: 0 auto;
+    width: 100%;
+    margin-top:10px;
+	display: flex;
 
+}
+.admin
+{
+    margin: 0 auto;
+    width: 100%;
+}
+  .btn
+    {
+        background-color: #a175d7;
+    }
+    
+   .buttons
+   {
+	   display: flex;
+	   
+}
 
+table
+{
+		width: 100%;
+		
+}
+.userInfo
+{
+	background: white;
+	margin: 0 auto;
+	opacity: 0.96;
 
+}
 </style>

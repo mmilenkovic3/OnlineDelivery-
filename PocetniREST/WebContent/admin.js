@@ -54,11 +54,6 @@ $(document).ready(function(){
 	var birthday = document.getElementById("birthday");
 	var username = document.getElementById("username");
 	
-	
-	//var gender = document.getElementById("name");
-	//$("input:radio[name=radiobtn]:checked").val() = loggedUser.gender;
-	//console.log("gender: " + gender)
-
 	name.value = loggedUser.name;
 	name.disabled = true; 
 	 
@@ -96,8 +91,6 @@ function regManagerAndDeliverer()
 {
 	$(location).attr('href', 'http://localhost:8080/PocetniREST/registrationManagerAndDeliverer.html');
 }
-
-
 function getLoggedUser() {
 
 	var user = null;
@@ -290,46 +283,6 @@ function sortName()
 
 }
 
-
-/*
-function sortTableByColumn(table, column, asc = true) {
-    const dirModifier = asc ? 1 : -1;
-    const tBody = table.tBodies[0];
-    const rows = Array.from(tBody.querySelectorAll("tr"));
-
-    // Sort each row
-    const sortedRows = rows.sort((a, b) => {
-        const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-        const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-
-        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-    });
-
-    // Remove all existing TRs from the table
-    while (tBody.firstChild) {
-        tBody.removeChild(tBody.firstChild);
-    }
-
-    // Re-add the newly sorted rows
-    tBody.append(...sortedRows);
-
-    // Remember how the column is currently sorted
-    table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
-    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
-    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
-}
-
-document.querySelectorAll(".table-sortable th").forEach(headerCell => {
-    headerCell.addEventListener("click", () => {
-        const tableElement = headerCell.parentElement.parentElement.parentElement;
-        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-        const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-
-        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
-    });
-});
-*/
-
 function cancel()
 {
 	document.getElementById("save").disabled = true;
@@ -386,4 +339,168 @@ function cancel()
 function regNewRest()
 {
 	$(location).attr('href', 'http://localhost:8080/PocetniREST/registerRestaurant.html');
+}
+
+function roleSearch(){
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('allUsers');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+
+	var role = document.getElementById('byRole').value;
+	console.log(role);
+
+	var employList; 
+
+	$.ajax({
+		async : false,
+		type : 'POST',
+		url : "rest/users/fillterByRole",
+		dataType : 'json',
+		data: JSON.stringify({
+			role : role
+		}),
+		contentType : "application/json",
+		success : function(data) {
+				console.log("PODACI?");
+				employList = data;
+		},
+		error : function(message) {
+			console.log("err");		
+		}
+	})
+
+	
+
+	
+	var employee_data;
+	
+		 for(let i = 0; i <= employList.length-1; i++)
+			{
+				console.log(employList[i].name);
+				  employee_data += '<tr scope="row">';
+			      employee_data += '<td scope="col">'+employList[i].role +'</td>';
+			      employee_data += '<td scope="col">'+employList[i].username+'</td>';
+			      employee_data += '<td scope="col">'+employList[i].name +'</td>';	      
+			      employee_data += '<td scope="col">'+employList[i].lastname +'</td>';
+			      if(employList[i].gender == "FEMALE")
+			    	  employee_data += '<td scope="col"> Female</td>';
+			      
+			      else
+			    	  employee_data += '<td scope="col"> Male</td>';
+			      
+			      employee_data += '<td scope="col">'+ (new Date(employList[i].birthday)).toISOString().split('T')[0]+'</td>';
+			      employee_data += '<td scope="col">'+employList[i].points +'</td>';
+			      employee_data += '<td scope="col">'+employList[i].customerType.type +'</td>';
+			      employee_data += '<tr>';
+			   
+				
+			}
+			 
+		   $('#tbodyId').append(employee_data);
+
+}
+
+function cleanFillter()
+{
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('allUsers');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+
+	$.getJSON("http://localhost:8080/PocetniREST/rest/users/getAllUsers", function(data){
+	    var employee_data = '';
+	    $.each(data, function(key, value){
+	      employee_data += '<tr scope="row">';
+	      employee_data += '<td scope="col">'+value.role+'</td>';
+	      employee_data += '<td scope="col">'+value.username+'</td>';
+	      employee_data += '<td scope="col">'+value.name +'</td>';	      
+	      employee_data += '<td scope="col">'+value.lastname +'</td>';
+	      if(value.gender == "FEMALE")
+	    	  employee_data += '<td scope="col"> Female</td>';
+	      
+	      else
+	    	  employee_data += '<td scope="col"> Male</td>';
+	      
+	      employee_data += '<td scope="col">'+ (new Date(value.birthday)).toISOString().split('T')[0]+'</td>';
+	      employee_data += '<td scope="col">'+value.points +'</td>';
+	      employee_data += '<td scope="col">'+value.customerType.type +'</td>';
+	      employee_data += '<tr>';
+	    });
+	    $('#tbodyId').append(employee_data);
+	  });
+
+	  document.getElementById('nameSearch2').value="";
+	  document.getElementById('nameSearch1').value="";
+	  document.getElementById('nameSearch3').value="";
+}
+
+
+function userTypeSearch()
+{
+	userType = document.getElementById('byUserType').value;
+	console.log(userType);
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('allUsers');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+
+
+	var employList; 
+
+	$.ajax({
+		async : false,
+		type : 'POST',
+		url : "rest/users/fillterByUserType",
+		dataType : 'json',
+		data: JSON.stringify({
+			type : userType
+		}),
+		contentType : "application/json",
+		success : function(data) {
+				console.log("PODACI?");
+				employList = data;
+		},
+		error : function(message) {
+			console.log("err");		
+		}
+	})
+
+	
+
+	
+	var employee_data;
+	
+		 for(let i = 0; i <= employList.length-1; i++)
+			{
+				console.log(employList[i].name);
+				  employee_data += '<tr scope="row">';
+			      employee_data += '<td scope="col">'+employList[i].role +'</td>';
+			      employee_data += '<td scope="col">'+employList[i].username+'</td>';
+			      employee_data += '<td scope="col">'+employList[i].name +'</td>';	      
+			      employee_data += '<td scope="col">'+employList[i].lastname +'</td>';
+			      if(employList[i].gender == "FEMALE")
+			    	  employee_data += '<td scope="col"> Female</td>';
+			      
+			      else
+			    	  employee_data += '<td scope="col"> Male</td>';
+			      
+			      employee_data += '<td scope="col">'+ (new Date(employList[i].birthday)).toISOString().split('T')[0]+'</td>';
+			      employee_data += '<td scope="col">'+employList[i].points +'</td>';
+			      employee_data += '<td scope="col">'+employList[i].customerType.type +'</td>';
+			      employee_data += '<tr>';
+			   
+				
+			}
+			 
+		   $('#tbodyId').append(employee_data);
+
+
+
 }

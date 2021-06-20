@@ -17,7 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Gender;
 import model.Restaurant;
+import model.RestaurantType;
 import model.Role;
+import model.Type;
 import model.User;
 
 public class UserRepository {
@@ -212,6 +214,60 @@ public class UserRepository {
 		
 		return newList;
 	}
+	
+
+	public static ArrayList<User> fillterByRole(HashMap<String, String> role) {
+		Role roleType = null;
+			if(role.get("role").equals("ADMIN"))
+				roleType = Role.ADMIN;
+			else if(role.get("role").equals("CUSTOMER"))
+				roleType = Role.CUSTOMER;
+			else if(role.get("role").equals("MANAGER"))
+				roleType = Role.MANAGER;
+			else if(role.get("role").equals("DELIVERER"))
+				roleType = Role.DELIVERER;
+			
+			
+			
+		ArrayList<User> newList = new ArrayList<User>();
+		for(User r : GetAllUsers())
+		{
+			if(r.getRole().equals(roleType))
+			{
+				newList.add(r);
+			}
+				
+			
+		}
+		
+		return newList;
+	}
+	
+	public static ArrayList<User> fillterByType(HashMap<String, String> type) {		
+		Type userType = null;
+			if(type.get("type").equals("GOLDEN"))
+				userType = Type.GOLDEN;
+			else if(type.get("type").equals("SILVER"))
+				userType = Type.SILVER;
+			else if(type.get("type").equals("BRONZE"))
+				userType = Type.BRONZE;		
+			
+			
+		ArrayList<User> newList = new ArrayList<User>();
+		for(User r : GetAllUsers())
+		{
+			if(r.getCustomerType().getType().equals(userType))
+			{
+				newList.add(r);
+			}
+				
+			
+		}
+		
+		return newList;
+	}
+	
+	
 	
 
 }
