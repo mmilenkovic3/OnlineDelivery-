@@ -65,6 +65,11 @@ public class RestaurantRepository {
 	{		
 		System.out.println("Saving the restaurant..");
 		 int id = GetAllRestaurant().size() + 1;
+		 
+		 /*for (Restaurant r : GetAllRestaurant()) {
+			 if(r.getId() == )
+			
+		}*/
 		
 		ArrayList<Restaurant> restaurants = GetAllRestaurant();
 		Address address = new Address(restaurantDTO.getAddressName(),
@@ -177,6 +182,7 @@ public class RestaurantRepository {
 		
 		return newList;
 	}
+	
 	
 	
 	

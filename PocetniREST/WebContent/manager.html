@@ -1,65 +1,69 @@
 <html>
     <head>
         <meta charset="ISO-8859-1">
-        <script src="jquery-3.3.1.min.js"> </script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="jquery-3.3.1.min.js"> </script>
         <title> Manager </title>
     </head>
 <body>
-    <h1> Welcome </h1>
-
-    <button id="logOut" onclick="logOut()" > Log out </button>
-<br> 
-<div>
-    <form id="changeProfile">
+    <div class="buttons">
+        <table style="width:100%; margin-top: 10px; ">           
+                <td>
+                    <button  class="btn btn-warning" style="width:100%;" id="logOut" onclick="logOut()"> Log out </button>  
+                </td>
+            </tr>
+        </table> 
+	</div>
+<div class="userInfo">
+	<h1 style="text-align: center;"> 
+	    User account info: 
+	</h1>
+    <form id="changeProfile" >
         <table>
         <tr>
-            <td> Name: </td>
-            <td> <input type="text" id="name"  /> </td>
+            <td style="text-align: center; width:200px; font-size:18px;" > Name: </td>
+            <td><input type="text" id="name"   class="form-control" /> </td>
         </tr>
         <tr>
-            <td> Lastname: </td>
-            <td> <input type="text" id="lastname"> </td>
+            <td style="text-align: center; font-size:18px;" > Lastname: </td>
+            <td > <input type="text" id="lastname"  class="form-control" > </td>
         </tr>
         <tr>
-            <td> Gender: </td>
-            <td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
+            <td style="text-align: center; font-size:18px;" >  Gender: </td>
+            <td> <input type="radio" id="male" class="radioBtnClass" value="Male" class="form-control"   name="radiobtn">Male</input>  </td>
         </tr>
         <tr>
             <td> </td>
-            <td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
+            <td> <input type="radio" id="female" class="radioBtnClass" value="Female" class="form-control"  name="radiobtn">Female</input> </td>
         </tr>
         
         <tr>
-            <td> Birthday: </td>
-            <td> <input type="date" id="birthday" placeholder="dd-mm-yyyy" /></td>
+            <td style="text-align: center; font-size:18px;" > Birthday: </td>
+            <td> <input type="date" class="form-control"  id="birthday" placeholder="dd-mm-yyyy" /></td>
         </tr>
         <tr>
-            <td> Username: </td>
-            <td> <input type="text" id="username"></td>
+            <td style="text-align: center; font-size:18px;" > Username: </td>
+            <td> <input type="text" class="form-control"  id="username"></td>
         </tr>
-        <!--<tr>
-            <td> Password: </td>
-            <td> <input type="password" id="password" style="border-color:red"> </td>
-        </tr>
-        <tr>
-            <td> Password repeat: </td>
-            <td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
-        </tr>
-        <tr colspan="2">
-            <td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
-        </tr>-->
+   
         
         </table>
         
     </form>
-    <br>
-    <button id="edit" onclick="edit()" value="Edit"> Edit</button>
-    <br>
-
-    <button id="save" onclick="save()" value="Save"> Save</button>
-    <br>
-    <button id="cancel" onclick="cancel()" value="Cancel"> Cancel</button>
+    <br/>
+    <table>
+	    <tr>
+		    <td> <button   style="width:100%;"  class="btn btn-warning" id="edit" onclick="edit()" value="Edit"> Edit</button> </td>
+		    <td> <button   style="width:100%;"  class="btn btn-warning" id="save" onclick="save()" value="Save"> Save</button></td>
+		    <td> <button   style="width:100%;"   class="btn btn-warning" id="cancel" onclick="cancel()" value="Cancel"> Cancel</button> </td>
+		 </tr>
+    </table>    
+   
 </div>
+    
 <br>
 <h1> RESTAURANT INFO: </h1>
 <div class="restInfo">
@@ -69,6 +73,8 @@
     </table>
 
 </div>
+
+<button id="addArticle" class="btn btn-warning" onclick="articlePage(); return false"> Articles </button>
 
 
 </body>
@@ -154,6 +160,12 @@ $.getJSON("http://localhost:8080/PocetniREST/rest/restaurant/getAllRestaurant", 
 	  });
 
 });
+
+function articlePage()
+{
+	window.location.replace("articlePage.html");
+}
+
 
 
 
@@ -326,3 +338,29 @@ function cancel()
 }
 
 </script>
+
+<style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
+.btn
+    {
+        background-color: #a175d7;
+    }
+    
+    table
+{
+		width: 100%;
+		
+}
+.userInfo
+{
+	background: white;
+	margin: 0 auto;
+	opacity: 0.96;
+
+}
+    
+</style>

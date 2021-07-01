@@ -5,20 +5,46 @@ public class Article {
 	private String name;
 	private FoodType type;
 	private int idRestaurant;
-	private Qunatity quantiti;
+	private Qunatity quantity;
+	private double qunatityNum;
+	private double price;
 	private String description;
 	private String picture;
 	
-	public Article(int idArticle, String name, FoodType type, int idRestaurant, Qunatity quantiti, String description,
-			String picture) {
+	public Article() {}
+
+	public Article(int idArticle, String name, FoodType type, int idRestaurant, Qunatity quantity, double qunatityNum,
+			double price, String description, String picture) {
 		super();
 		this.idArticle = idArticle;
 		this.name = name;
 		this.type = type;
 		this.idRestaurant = idRestaurant;
-		this.quantiti = quantiti;
+		this.quantity = quantity;
+		this.qunatityNum = qunatityNum;
+		this.price = price;
 		this.description = description;
 		this.picture = picture;
+	}
+	
+	public Article(int idArticle, String name, FoodType type,  Qunatity quantity, double qunatityNum,
+			double price, String description, String picture) {
+		super();
+		this.idArticle = idArticle;
+		this.name = name;
+		this.type = type;
+		this.quantity = quantity;
+		this.qunatityNum = qunatityNum;
+		this.price = price;
+		this.description = description;
+		this.picture = picture;
+	}
+
+	@Override
+	public String toString() {
+		return "Article [idArticle=" + idArticle + ", name=" + name + ", type=" + type + ", idRestaurant="
+				+ idRestaurant + ", quantity=" + quantity + ", qunatityNum=" + qunatityNum + ", price=" + price
+				+ ", description=" + description + ", picture=" + picture + "]";
 	}
 
 	public int getIdArticle() {
@@ -53,12 +79,28 @@ public class Article {
 		this.idRestaurant = idRestaurant;
 	}
 
-	public Qunatity getQuantiti() {
-		return quantiti;
+	public Qunatity getQuantity() {
+		return quantity;
 	}
 
-	public void setQuantiti(Qunatity quantiti) {
-		this.quantiti = quantiti;
+	public void setQuantity(Qunatity quantity) {
+		this.quantity = quantity;
+	}
+
+	public double getQunatityNum() {
+		return qunatityNum;
+	}
+
+	public void setQunatityNum(double qunatityNum) {
+		this.qunatityNum = qunatityNum;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public String getDescription() {
@@ -76,13 +118,7 @@ public class Article {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-
-	@Override
-	public String toString() {
-		return "Article [idArticle=" + idArticle + ", name=" + name + ", type=" + type + ", idRestaurant="
-				+ idRestaurant + ", quantiti=" + quantiti + ", description=" + description + ", picture=" + picture
-				+ "]";
-	}
+	
 	
 	
 	

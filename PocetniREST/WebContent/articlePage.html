@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Articles</title>
+<script src="jquery-3.3.1.min.js"> </script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="first">
+<div class="artInfo" >
+	<h1 style="text-align: center;"> 
+	   Add/Edit article: 
+	</h1>
+    <form id="articleEditNew" >
+        <table id="artTable">
+        <tr>
+            <td style="text-align: center; width:200px; font-size:18px;" > Name: </td>
+            <td><input type="text" id="artName" class="form-control" /> </td>
+        </tr>
+        <tr>
+            <td style="text-align: center; font-size:18px;" > Type: </td>
+            <td > <select  id="artType">
+            <option> FOOD </option>
+            <option> DRINK </option>
+        </select> </td>
+        </tr>
+        <tr>
+            <td style="text-align: center; font-size:18px;" >  Quantity: </td>
+            <td> <input type="text" id="artQuantityNum"   class="form-control" />  </td>
+            <td>
+            	<select  id="quantity">
+		            <option> ML </option>
+		            <option> G </option>
+		        </select> </td>
+        </tr>
+        <tr>
+            <td  style="text-align: center; font-size:18px;"> Price: </td>
+            <td><input type="text" id="artPrice"   class="form-control" /> </td>
+        </tr>
+        
+        <tr>
+            <td style="text-align: center; font-size:18px;" > Description: </td>
+            <td> <input type="text" class="form-control"  id="artDescription" /></td>
+            <td cellspan="2"></td>
+        </tr>
+        <tr>
+            <td style="text-align: center; font-size:18px;" > Picture: </td>
+            <td> <input type="text" class="form-control"  id="artPicture"></td>
+        </tr>
+              
+        </table>
+        
+    </form>
+    <br/>
+    <table>
+	    <tr>
+	     	<td> <button   style="width:100%;"  class="btn btn-warning" id="new" onclick="newArt();return false;" value="Add new"> New</button> </td>		
+		    <td> <button   style="width:100%;"  class="btn btn-warning" id="save" onclick="save()" value="Save"> Save</button></td>
+		        <td> <button   style="width:100%;"  class="btn btn-warning" id="edit" onclick="edit()" value="Edit"> Edit</button> </td>
+		    <td> <button   style="width:100%;"   class="btn btn-warning" id="cancel" onclick="cancel()" value="Cancel"> Cancel</button> </td>
+		 </tr>
+    </table>    
+   
+</div>
+
+
+
+
+<div class="artContainer">
+<table id="articleTable"  style="cursor:pointer" class="table table-bordered">
+		<tr>
+			<th> Name </th>
+			<th> Price </th>
+			<th> Type </th>
+			<th> Descritpion </th>
+			<th> Quantity </th>
+			<th> Picture </th>
+			
+		</tr>
+		<tbody id="artBody">
+		
+		</tbody>
+	
+	</table>
+</div>
+</div>
+</body>
+</html>
+<script>function newArt()
+{
+	var artName = document.getElementById('artName');
+	 var artType = document.getElementById('artType');
+	 var artQuantity = document.getElementById('quantity');
+	 var artQuantityNum = document.getElementById('artQuantityNum');
+	 var artPrice = document.getElementById('artPrice');
+	 var artDescription = document.getElementById('artDescription');
+	 var artPicture = document.getElementById('artPicture');
+	 
+	 if(!artName.value ||  !artPrice.value)
+		 {
+			 alert("Enter all field!");
+			 
+			 
+			 
+			 
+			 
+		 }
+	 
+	 else	 
+		 {
+		 $.ajax({
+				type : "POST",
+				url : "rest/article/saveArticle",
+				data : JSON.stringify({
+					idArticle: 0,
+					name : artName.value,
+					type: artType.value,
+					idRestaurant: user.idRestaurant,
+					quantity: artQuantity.value,
+					qunatityNum : artQuantityNum.value,
+					price: artPrice.value,
+					description : artDescription.value,					
+					picture : "aa.jpg"			
+					
+				}),
+				contentType : "application/json",
+				dataType : 'json',
+				success : function(data) {	
+					artName.value = "";
+					artQuantityNum.value = "";
+					artPrice.value ="";
+					artDescription.value = "";
+					artPicture.value = "";
+					
+					console.log("USPESNO?");
+					alert("Success!")
+					location.reload(); 
+
+						},
+				error : function(message) {
+					alert("Error!");
+					$('#error').text(message);
+					$('#error').show().delay(3000).hide();
+					}
+				});		
+		 
+		 }
+	 console.log("new");
+	
+}
+
+
+var idArt;
+var user = getLoggedUser();
+
+
+var listArticle;
+console.log(listArticle);
+
+$(document).ready(function(){
+	$.ajax({
+
+		async : false,
+		type : "POST",
+		url : "rest/article/getArticleByIDRest",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			idRestaurant: user.idRestaurant
+		}),
+			
+		success : function(data) {
+			listArticle = data;			
+
+			console.log(listArticle);
+				},
+		error : function(message) {
+			alert("Error!");
+
+			console.log("Udje u error.");
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+
+	console.log(listArticle);
+	  var article_data = '';
+		for(let i = 0; i <= listArticle.length-1; i++)
+			{
+			
+				//console.log(listArticle[i].picture);
+				article_data += '<tr  scope="row" onClick="selectedRow('+ listArticle[i].idArticle +')">';
+				article_data += '<td scope="col">'+ listArticle[i].name +'</td>';
+				article_data += '<td scope="col">'+ listArticle[i].price +'</td>';
+				article_data += '<td scope="col">'+ listArticle[i].type +'</td>';
+				article_data += '<td scope="col">'+ listArticle[i].description +'</td>';
+		        article_data += '<td scope="col">'+ listArticle[i].qunatityNum +' '+ listArticle[i].quantity  +'</td>';	  
+		        article_data += '<td scope="col"><img src='+listArticle[i].picture+' width="200px" height="200px"></td>';
+		        article_data += '</tr>';
+			}
+		
+		  $('#artBody').append(article_data);
+	
+	document.getElementById("edit").disabled = true;
+	document.getElementById("cancel").disabled = true;
+
+	document.getElementById("save").disabled = true;
+});
+
+
+
+function selectedRow(e) {
+	 console.log(e);
+	 idArt = e;
+	 document.getElementById('edit').disabled = false;
+	 document.getElementById("cancel").disabled = true;
+
+	 document.getElementById("new").disabled = true;
+	 document.getElementById("save").disabled = true;
+	 var artName = document.getElementById('artName');
+	 var artType = document.getElementById('artType');
+	 var artQuantity = document.getElementById('quantity');
+	 var artQuantityNum = document.getElementById('artQuantityNum');
+	 var artPrice = document.getElementById('artPrice');
+	 var artDescription = document.getElementById('artDescription');
+	 var artPicture = document.getElementById('artPicture');
+	 
+	 for(let i = 0; i <= listArticle.length-1; i++)
+		 {
+			 if(listArticle[i].idArticle == e)
+				 {
+				 	artName.value = listArticle[i].name;
+				 	artName.disabled = true;
+				 	artType.value = listArticle[i].type;
+				 	console.log(listArticle[i].type);
+				 	artType.disabled = true;
+				 	artQuantity.value = listArticle[i].quantity;
+				 	artQuantity.disabled = true;
+				 	artQuantityNum.value = listArticle[i].qunatityNum;
+				 	artQuantityNum.disabled = true;
+				 	artPrice.value = listArticle[i].price;
+				 	artPrice.disabled = true;
+				 	artDescription.value = listArticle[i].description;
+				 	artDescription.disabled = true;
+				 }
+			 }
+	 
+	
+	 
+	 
+}
+function cancel()
+{
+	var artName = document.getElementById('artName');
+	 var artType = document.getElementById('artType');
+	 var artQuantity = document.getElementById('quantity');
+	 var artQuantityNum = document.getElementById('artQuantityNum');
+	 var artPrice = document.getElementById('artPrice');
+	 var artDescription = document.getElementById('artDescription');
+	 var artPicture = document.getElementById('artPicture');
+	 
+	artName.value = "";
+ 	artName.disabled = false; 
+ 	artType.disabled = false;
+ 	artQuantity.disabled = false;
+ 	artQuantityNum.value = "";
+ 	artQuantityNum.disabled = false;
+ 	artPrice.value = "";
+ 	artPrice.disabled = false;
+ 	artDescription.value = "";
+ 	artDescription.disabled = false;
+ 	 document.getElementById("new").disabled = false;
+	 document.getElementById("cancel").disabled = true;
+
+	 document.getElementById("save").disabled = true;
+	
+	
+}
+
+
+function edit()
+{
+	var artName = document.getElementById('artName');
+	 var artType = document.getElementById('artType');
+	 var artQuantity = document.getElementById('quantity');
+	 var artQuantityNum = document.getElementById('artQuantityNum');
+	 var artPrice = document.getElementById('artPrice');
+	 var artDescription = document.getElementById('artDescription');
+	 var artPicture = document.getElementById('artPicture');
+	 
+	 artName.disabled = false;
+	 artType.disabled = false;
+	 artQuantity.disabled = false;
+	 artQuantityNum.disabled = false;
+	 artPrice.disabled = false;
+	 artDescription.disabled = false;
+	 
+	 document.getElementById("cancel").disabled = false;
+	 document.getElementById("save").disabled = false;
+	 document.getElementById("edit").disabled = true;
+	 
+	 
+	 
+	 
+}
+
+function save()
+{
+	var artName = document.getElementById('artName');
+	 var artType = document.getElementById('artType');
+	 var artQuantity = document.getElementById('quantity');
+	 var artQuantityNum = document.getElementById('artQuantityNum');
+	 var artPrice = document.getElementById('artPrice');
+	 var artDescription = document.getElementById('artDescription');
+	 var artPicture = document.getElementById('artPicture');
+	
+	 $.ajax({
+			type : "POST",
+			url : "rest/article/editArticle",
+			data : JSON.stringify({
+				idArticle: idArt,
+				name : artName.value,
+				description : artDescription.value,
+				qunatityNum : artQuantityNum.value,
+				price: artPrice.value,
+				picture : "aa.jpg",
+				idRestaurant: user.idRestaurant,
+				type: artType.value,
+				quantity: artQuantity.value
+			}),
+			contentType : "application/json",
+			dataType : 'json',
+			success : function(data) {	
+				artName.value = "";
+				artQuantityNum.value = "";
+				artPrice.value ="";
+				artDescription.value = "";
+				artPicture.value = "";
+				
+				console.log("USPESNO?");
+				location.reload(); 
+
+					},
+			error : function(message) {
+				alert("Error!");
+				$('#error').text(message);
+				$('#error').show().delay(3000).hide();
+				}
+			});		
+	
+	
+	}
+
+function getLoggedUser() {
+
+	var user = null;
+
+	$.ajax({
+		async : false,
+		url : "rest/users/getLoggedUser",
+		type : 'GET',
+		dataType : 'json',
+		success : function(data) {
+			if (data) {
+				user = data;
+			}
+		},
+		error : function(errorThrown) {
+			toastr.error(errorThrown.responseText);
+		}
+	});
+	return user;
+}
+
+</script>
+
+<style>
+
+body
+{
+    background-image: url('./images/back.jpg');    
+}
+
+.artContainer
+{
+	background-color: white;
+	width: 70%;
+	margin: 0 auto;
+	height:100%;
+}
+
+.artInfo
+{
+	width: 100%;
+	background: white;
+	margin: 0 auto;
+	opacity: 0.96;
+
+}
+
+.first
+{
+    margin: 0 auto;
+    width: 100%;
+}
+</style>
