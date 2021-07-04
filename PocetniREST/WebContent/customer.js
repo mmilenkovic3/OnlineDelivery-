@@ -1,4 +1,6 @@
 //var loggedUser;
+
+var orders;
 $(document).ready(function(){
 	document.getElementById("save").disabled = true;
 	document.getElementById("cancel").disabled = true;
@@ -45,10 +47,93 @@ $(document).ready(function(){
 
 	username.value = loggedUser.username;
 	username.disabled = true;
+	// Popunjavanje tabele pursh
+	$.ajax({
+		async : false,
+		url : "rest/order/getOrderByUsername",
+		type : 'POST',
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			username: loggedUser.username
+		}),
+			
+		success : function(data) {
+			if (data) {
+				orders = data;
+				console.log(orders);
+
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('pursh');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}
+				
+				
+				var data;
+				for(let i = 0; i <= orders.length-1; i++)
+				{		
+					if(orders[i].status != "DELIVER")
+					{
+					data += '<tr scope="row">';
+				     data += '<td scope="col">'+orders[i].id +'</td>';
+				     data += '<td scope="col" style="height:40px;">';
+				     for(let j=0; j<= orders[i].articles.length-1; j++)
+				     { 
+
+				    	 console.log("YSAO Y FOR");
+				    	 console.log(orders[i].articles[j]);
+				    	 data += orders[i].articles[j].quantity +' '+ orders[i].articles[j].name + ' - ' + orders[i].articles[j].price +' RSD <br/>' ;
+				     
+				     }
+				     data += ' </td>';
+				     data += '<td scope="col">'+orders[i].restaurantName+' </td>';
+				     data += '<td scope="col">'+orders[i].date+' </td>';
+				     data += '<td scope="col">'+orders[i].price+' </td>';
+				     data += '<td scope="col">'+orders[i].status+' </td>';
+				     if(orders[i].status == "PROCESSING")
+				    	 data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="cancelOrder(orders['+i+'].id); return false;"> X </td>';
+				     else
+				    	 data += '<td scope="col"></td>';
+				     data += '<tr>';
+					}
+					
+				}
+				 
+			   $('#tableBodyPursh').append(data);
+			}
+		},
+		error : function(errorThrown) {
+			toastr.error(errorThrown.responseText);
+		}
+	});
 });
 
-
-
+function cancelOrder(id)
+{
+	console.log(id);
+	$.ajax({
+		async : false,
+		type : "POST",
+		url : "rest/order/cancelOrder",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			id: id
+		}),
+			
+		success : function(data) {
+			console.log(data);
+			alert("Successeffully canceled order. But you lose some of points!");
+			location.reload(true);
+				},
+		error : function(message) {
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+}
 function getLoggedUser() {
 
 	var user = null;
@@ -113,6 +198,11 @@ function edit()
 	document.getElementById("male").disabled = false;
 		
 	
+}
+
+function creteNewOrder()
+{
+	window.location.replace("orderingPage.html");
 }
 
 function save()

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Customer - ordering </title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+<div>
+
+ <button id="back"  style="width:100%;"  class="btn btn-warning" onclick="back()" value="Back"> Back</button>
+ <h2 style="text-align: center; font-size:18px;"> New order, Please select restaurant: </h2>
+ <select id="restaurantOption" onchange="showArticle(this.value)" class="form-control"> </select> 
+<div id="divdiv">
+
+<table id="articleForOrder"  class="table table-bordered">
+	<tr>
+		<th> Name </th>
+		<th> Price </th>
+		<th> Type </th>
+		<th></th>
+	</tr>
+	<tbody id="tableBody">
+	
+	</tbody>
+</table>
+<br>
+<h2 style="text-align: center; font-size:18px;"> Backet: </h2>
+
+<table id="articlePursh"  class="table table-bordered">
+	<tr>
+		<th> Name </th>
+		<th> Price </th>
+		<th> Type </th>
+		<th></th>
+	</tr>
+	<tbody id="tableBodyPursh">
+	
+	</tbody>
+</table>
+
+</div>
+</div>
+</body>
+</html>
+
+<script>
+var restaurantList;
+var articles;
+var ordered; 
+
+$(document).ready(function(){
+	
+	$.ajax({
+		async : false,
+		url : "rest/restaurant/getAllRestaurant",
+		type : 'GET',
+		dataType : 'json',
+		success : function(data) {
+			if (data) {
+				restaurantList = data;
+				
+				$('#restaurantOption').append($('<option>', { 
+			        value: 0,
+			        text : "Select restaurant.."
+			    }));
+				
+				$.each(restaurantList, function (i, item) {
+					if(item.status == "OPEN")
+						{
+						 $('#restaurantOption').append($('<option>', { 
+						        value: item.id,
+						        text : item.name 
+						    }));
+						}
+				   
+				});
+			}
+		},
+		error : function(errorThrown) {
+			toastr.error(errorThrown.responseText);
+		}
+	});
+	
+	})
+function back()
+{
+		window.location.replace("customer.html");
+}
+	
+
+function showArticle(id)
+{
+	$.ajax({
+		async : false,
+		type : "POST",
+		url : "rest/article/getArticleByIDRest",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			idRestaurant: id
+		}),
+			
+		success : function(data) {
+			articles = data;
+				},
+		error : function(message) {
+			console.log("Udje u error.");
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+	
+	console.log(articles);
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('articleForOrder');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+	
+	
+	var data;
+	for(let i = 0; i <= articles.length-1; i++)
+	{
+		console.log(articles[i].name +" " + articles[i].idArticle);
+		  data += '<tr scope="row">';
+	    data += '<td scope="col">'+articles[i].name +'</td>';
+	      data += '<td scope="col">'+articles[i].price+' RSD </td>';
+	      if(articles[i].type == "DRINK")
+	    	  data += '<td scope="col"> Drink </td>';
+	      
+	      else
+	    	  data += '<td scope="col"> Food </td>';
+	      
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="addNewArt(articles['+i+'].idArticle); return false;"> + 1 </td>';
+	     
+	    	  data += '<tr>';
+	   
+		
+	}
+	 
+   $('#tableBody').append(data);
+	
+	document.getElementById('divdiv').style.visibility = "visible";
+	
+}
+
+function addNewArt(id)
+{
+	console.log(id);
+}
+</script>
+
+<style>
+
+
+
+</style>

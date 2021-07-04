@@ -2,12 +2,15 @@ package model;
 
 public class Basket {
 	private int idArticle;
+	private String name;
 	private int quantity;
 	private double price;
 	
-	public Basket(int idArticle, int quantity, double price) {
+	public Basket() {}
+	public Basket(int idArticle,String name, int quantity, double price) {
 		super();
 		this.idArticle = idArticle;
+		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 	}
@@ -31,11 +34,19 @@ public class Basket {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	@Override
 	public String toString() {
-		return "Basket [idArticle=" + idArticle + ", quantity=" + quantity + ", price=" + price + "]";
+		return "Basket [idArticle=" + idArticle + ", name=" + name + ", quantity=" + quantity + ", price=" + price
+				+ "]";
 	}
+	
+	
 	
 	
 

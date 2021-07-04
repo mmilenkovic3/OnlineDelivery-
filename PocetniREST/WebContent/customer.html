@@ -3,29 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Rent apartment</title>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="jquery-3.3.1.min.js"> </script>
 <script src="customer.js"> </script>
 </head>
 <body>
-<h1> Customer - Online deilvery </h1>
-</body>
+<button id="logOut" style="width:100%; "  class="btn btn-warning" onclick="logOut()" > Log out </button>
 
-<button id="logOut" onclick="logOut()" > Log out </button>
+
+
+
 <br> 
 <div>
+<div class="in">
+<h1> Customer - Online deilvery </h1>
     <form id="changeProfile">
-        <table>
+        <table id="userInfo"  class="table table-bordered">
         <tr>
-            <td> Name: </td>
-            <td> <input type="text" id="name"  /> </td>
+            <td style="text-align: center; font-size:18px;">  Name: </td>
+            <td> <input type="text"  class="form-control" id="name"  /> </td>
         </tr>
         <tr>
-            <td> Lastname: </td>
-            <td> <input type="text" id="lastname"> </td>
+            <td style="text-align: center; font-size:18px;" > Lastname: </td>
+            <td> <input type="text"   class="form-control" id="lastname"> </td>
         </tr>
         <tr>
-            <td> Gender: </td>
+            <td style="text-align: center; font-size:18px;" > Gender: </td>
             <td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
         </tr>
         <tr>
@@ -33,13 +39,13 @@
             <td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
         </tr>
         
-        <tr>
+        <tr style="text-align: center; font-size:18px;">
             <td> Birthday: </td>
-            <td> <input type="date" id="birthday" placeholder="dd-mm-yyyy" /></td>
+            <td> <input type="date"   class="form-control" id="birthday" placeholder="dd-mm-yyyy" /></td>
         </tr>
-        <tr>
+        <tr style="text-align: center; font-size:18px;">
             <td> Username: </td>
-            <td> <input type="text" id="username"></td>
+            <td> <input type="text"   class="form-control" id="username"></td>
         </tr>
         <!--<tr>
             <td> Password: </td>
@@ -56,14 +62,64 @@
         </table>
         
     </form>
+  </div>
     <br>
-    <button id="edit" onclick="edit()" value="Edit"> Edit</button>
+    <button id="edit" style="width:100%;"  class="btn btn-warning" onclick="edit()" value="Edit"> Edit</button>
     <br>
 
-    <button id="save" onclick="save()" value="Save"> Save</button>
+    <button id="save" style="width:100%;"  class="btn btn-warning" onclick="save()" value="Save"> Save</button>
     <br>
-    <button id="cancel" onclick="cancel()" value="Cancel"> Cancel</button>
+    <button id="cancel" style="width:100%;"  class="btn btn-warning" onclick="cancel()" value="Cancel"> Cancel</button>
+	<button id="create" style="width:100%; margin-top:5px;"  class="btn btn-warning" onclick="creteNewOrder();return false;" value="create"> Create new order </button>
+<div class="orderinfo">
+<h1> Orders: </h1>
+
+<table id="pursh"  class="table table-bordered">
+	<tr>
+		<th> ID </th>
+		<th> Articles </th>
+		<th> Restaurant name </th>
+		<th> Date </th>
+		<th> Price </th>
+		<th> Status </th>
+	</tr>
+	<tbody id="tableBodyPursh">
+	
+	</tbody>
+</table>
 </div>
 
 
+</div>
+</body>
 </html>
+<style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
+
+.in
+{
+margin: 0 auto;
+background-color: white;
+    width: 100%;
+}
+#changeProfile
+{
+	width: 100%;
+}
+#userInfo
+{
+margin: 0 auto;
+	width: 100%;
+}
+.orderinfo
+{
+	margin: 0 auto;
+	width: 100%;
+	background-color: white;
+}
+
+</style>
