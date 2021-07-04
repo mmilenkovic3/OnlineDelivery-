@@ -35,7 +35,7 @@
 		<th> Name </th>
 		<th> Price </th>
 		<th> Type </th>
-		<th></th>
+		<th> Quantity </th>
 	</tr>
 	<tbody id="tableBodyPursh">
 	
@@ -43,6 +43,15 @@
 </table>
 
 </div>
+<div>
+	<table class="table table-bordered">
+	<tr scope="row">
+	<td style="text-align: center;" scope="col"><label id="sumPrice"> 0 </label></td>
+	<td  scope="col"><button id="back"  style="width:100%;"  class="btn btn-warning" onclick="create()" > Create order </button> </td>
+	</tr>
+	</table>
+</div>
+
 </div>
 </body>
 </html>
@@ -51,6 +60,31 @@
 var restaurantList;
 var articles;
 var ordered; 
+var price = 0;
+
+var orderList = [];
+loggedUser = getLoggedUser();
+
+function getLoggedUser() {
+
+	var user = null;
+
+	$.ajax({
+		async : false,
+		url : "rest/users/getLoggedUser",
+		type : 'GET',
+		dataType : 'json',
+		success : function(data) {
+			if (data) {
+				user = data;
+			}
+		},
+		error : function(errorThrown) {
+			toastr.error(errorThrown.responseText);
+		}
+	});
+	return user;
+}
 
 $(document).ready(function(){
 	
@@ -122,13 +156,22 @@ function showArticle(id)
 	    table.deleteRow(tableHeaderRowCount);
 	}
 	
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('articlePursh');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+	
+	orderList = [];
+	
+	
 	
 	var data;
 	for(let i = 0; i <= articles.length-1; i++)
-	{
-		console.log(articles[i].name +" " + articles[i].idArticle);
+	{		
 		  data += '<tr scope="row">';
-	    data += '<td scope="col">'+articles[i].name +'</td>';
+	      data += '<td scope="col">'+articles[i].name +'</td>';
 	      data += '<td scope="col">'+articles[i].price+' RSD </td>';
 	      if(articles[i].type == "DRINK")
 	    	  data += '<td scope="col"> Drink </td>';
@@ -136,22 +179,237 @@ function showArticle(id)
 	      else
 	    	  data += '<td scope="col"> Food </td>';
 	      
-	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="addNewArt(articles['+i+'].idArticle); return false;"> + 1 </td>';
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="addNewArt(articles['+i+']); return false;"> + 1 </td>';
 	     
 	    	  data += '<tr>';
 	   
 		
 	}
 	 
-   $('#tableBody').append(data);
+   $('#tableBody').append(data);	
 	
-	document.getElementById('divdiv').style.visibility = "visible";
 	
 }
 
-function addNewArt(id)
+function addNewArt(article)
 {
-	console.log(id);
+	var exists = 0;
+	
+	for(let k=0; k <= orderList.length-1; k++)
+		{
+			if(orderList[k][0].idArticle == article.idArticle)
+				{
+					var num = orderList[k][1] + 1;
+					orderList[k][1] = num;	
+					price += article.price;
+
+					document.getElementById("sumPrice").innerHTML = price; 
+					exists = 1;
+					break;
+				}
+			
+		}
+	if(exists == 0)
+		{
+			orderList.push([article, 1]);
+			price += article.price;
+			console.log(price);
+			document.getElementById("sumPrice").innerHTML = price; 
+			
+		}	
+	
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('articlePursh');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+	
+	var data;
+	for(let i = 0; i <= orderList.length-1; i++)
+	{
+		  data += '<tr scope="row">';
+	    data += '<td scope="col">'+orderList[i][0].name +'</td>';
+	      data += '<td scope="col">'+orderList[i][0].price+' RSD </td>';
+	      if(orderList[i][0].type == "DRINK")
+	    	  data += '<td scope="col"> Drink </td>';
+	      
+	      else
+	    	  data += '<td scope="col"> Food </td>';
+	    	  data += '<td scope="col">'+ orderList[i][1] +'</td>';		    	 
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="deleteOne(orderList['+i+']); return false;"> - 1 </td>';
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="deteAll(orderList['+i+']); return false;"> Delete </td>';
+	    	  data += '<tr>';	   
+		
+	}
+	 
+   $('#tableBodyPursh').append(data);
+	
+	
+}
+
+function deleteOne(article)
+{
+	console.log(article[0])
+	for(let k=0; k <= orderList.length-1; k++)
+		{
+			if(orderList[k][0].idArticle == article[0].idArticle)
+				{
+					
+					if(orderList[k][1] > 1)
+					{
+						var num = orderList[k][1] - 1;
+						orderList[k][1] = num;	
+						price -= article[0].price;
+
+						document.getElementById("sumPrice").innerHTML = price; 
+					
+						exists = 1;
+						break;
+					}
+				}
+			
+		}	
+	
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('articlePursh');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+	
+	var data;
+	for(let i = 0; i <= orderList.length-1; i++)
+	{
+		  data += '<tr scope="row">';
+	    data += '<td scope="col">'+orderList[i][0].name +'</td>';
+	      data += '<td scope="col">'+orderList[i][0].price+' RSD </td>';
+	      if(orderList[i][0].type == "DRINK")
+	    	  data += '<td scope="col"> Drink </td>';
+	      
+	      else
+	    	  data += '<td scope="col"> Food </td>';
+	    	  data += '<td scope="col">'+ orderList[i][1] +'</td>';		    	 
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="deleteOne(orderList['+i+']); return false;"> - 1 </td>';
+	    	  
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="deteAll(orderList['+i+']); return false;"> Delete </td>';
+	    	  data += '<tr>';   
+		
+	}
+	 
+   $('#tableBodyPursh').append(data);
+}
+
+function deteAll(article)
+{
+	for(let k=0; k <= orderList.length-1; k++)
+	{
+		
+		if(orderList[k][0].idArticle == article[0].idArticle)
+			{	
+				
+				orderList.splice(k, 1);
+				price -= (article[0].price * article[1]);
+
+				document.getElementById("sumPrice").innerHTML = price; 
+			
+				//orderList[k][0].splice(i,1);
+				
+				break;
+				
+			}
+		
+	}	
+	console.log("trenutna ");
+	console.log(orderList);
+	var tableHeaderRowCount = 1;
+	var table = document.getElementById('articlePursh');
+	var rowCount = table.rows.length;
+	for (var i = tableHeaderRowCount; i < rowCount; i++) {
+	    table.deleteRow(tableHeaderRowCount);
+	}
+	
+	var data;
+	for(let i = 0; i <= orderList.length-1; i++)
+	{
+		  data += '<tr scope="row">';
+	    data += '<td scope="col">'+orderList[i][0].name +'</td>';
+	      data += '<td scope="col">'+orderList[i][0].price+' RSD </td>';
+	      if(orderList[i][0].type == "DRINK")
+	    	  data += '<td scope="col"> Drink </td>';
+	      
+	      else
+	    	  data += '<td scope="col"> Food </td>';
+	    	  data += '<td scope="col">'+ orderList[i][1] +'</td>';		    	 
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="deleteOne(orderList['+i+']); return false;"> - 1 </td>';
+	    	  
+	    	  data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="deteAll(orderList['+i+']); return false;"> Delete </td>';
+	    	  data += '<tr>';   
+		
+	}
+	 
+   $('#tableBodyPursh').append(data);
+}
+
+
+function create()
+{
+	if(price === 0)
+		{
+		 alert("Your order list is empty! Please select some food/drink :) ");
+		}
+	else
+		{
+		
+		
+		
+		
+		
+		var articles = [];
+		console.log();
+		
+		for(let i = 0; i <= orderList.length-1; i++)
+			{			
+				articles.push(
+						{
+							"idArticle": orderList[i][0].idArticle,
+							"name": orderList[i][0].name,
+							"quantity": orderList[i][1],
+							"price": orderList[i][0].price*orderList[i][1]
+						})
+				
+			}
+		
+		console.log(articles);
+		console.log(price);
+		
+		$.ajax({
+			type : "POST",
+			url : "rest/order/saveOrder",
+			data : JSON.stringify({
+				articles : articles,
+				idRestaurant : orderList[1][0].idRestaurant,
+				restaurantName: $("#restaurantOption option:selected").text(),
+				price: price,
+				username: loggedUser.username 
+			}),
+			contentType : "application/json",
+			dataType : 'json',
+			success : function(data) {			
+				alert("Your order has been created!");
+				$(location).attr('href', 'http://localhost:8080/PocetniREST/customer.html');
+
+					},
+			error : function(message) {
+				alert("Error!");
+				$('#error').text(message);
+				$('#error').show().delay(3000).hide();
+				}
+			});
+		
+		
+		}
+	
 }
 </script>
 

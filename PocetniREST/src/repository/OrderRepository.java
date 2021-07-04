@@ -7,13 +7,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.OrderDTO;
 import model.Order;
 import model.OrderStatus;
+import model.User;
 
 public class OrderRepository {
 
@@ -76,6 +75,25 @@ public class OrderRepository {
 				order = o;
 			}
 		}	
+		
+		User loggedUser = UserRepository.LoggedUser();
+		ArrayList<User> users = UserRepository.GetAllUsers();
+		for(User u : users)
+		{
+			if(u.getUsername().equals(loggedUser.getUsername()))
+			{
+				System.out.println("pre izmene: "+ u.getPoints());
+				u.setPoints(u.getPoints() - subPoints(order.getPrice()));
+				System.out.println("posle izmene: " + u.getPoints());
+				break;
+			}
+		}		
+		
+	
+		
+		UserRepository.saveList(users);
+		
+		
 		objMapper.writeValue(Paths.get(pathOrder).toFile(), orders);
 		
 		
@@ -102,25 +120,52 @@ public class OrderRepository {
 		return order;
 	}
 	
+	public static Order statusInPreparation(HashMap<String, String> id) throws IOException
+	{
+		ArrayList<Order> orders = GetAllOrder();
+		Order order = new Order();
+		for(Order o : orders)
+		{
+			if(o.getId() == Long.parseLong(id.get("id")))
+			{
+				o.setStatus(OrderStatus.IN_PREPARATION);
+				order = o;
+			}
+		}	
+		objMapper.writeValue(Paths.get(pathOrder).toFile(), orders);
+		
+		
+		
+		return order;
+	}
+	
 	
 	
 	
 	public static Order saveOrder(OrderDTO orderDTO) throws IOException
 	{
 		ArrayList<Order> allOrder = GetAllOrder();
-
+		ArrayList<User> users = UserRepository.GetAllUsers();
+		
 		long newId = generateID();
 		Order newOrder = new Order(newId,orderDTO.getIdRestaurant(), orderDTO.getArticles(),orderDTO.getRestaurantName(),
 				orderDTO.getPrice(), orderDTO.getUsername());
 	
-		/*newOrder.setId(newId);
-		newOrder.setArticles(orderDTO.getArticles());
-		newOrder.setIdRestaurant(orderDTO.getIdRestaurant());
-		newOrder.setRestaurantName(orderDTO.getRestaurantName());
-		newOrder.setPrice(orderDTO.getPrice());
-		newOrder.setUsername(orderDTO.getUsername());*/
+		for(User u : users)
+		{
+			if(u.getUsername().equals(orderDTO.getUsername()))
+			{
+				System.out.println("pre izmene: "+ u.getPoints());
+				u.setPoints( u.getPoints() + addPoints(orderDTO.getPrice()));
+				System.out.println("posle izmene: " + u.getPoints());
+				break;
+			}
+		}
+		
+		
 	
 		allOrder.add(newOrder);
+		UserRepository.saveList(users);
 		
 		objMapper.writeValue(Paths.get(pathOrder).toFile(), allOrder);
 		return newOrder;
@@ -136,5 +181,18 @@ public class OrderRepository {
 	    }
 	    return Long.parseLong(new String(digits));
 	}
+	
+	public static double addPoints(double price)
+	{
+		return  price/(1000 * 133);
+	}
+	
+	//pozvati kod cancel
+	public static double subPoints(double price)
+	{
+		return  price/(1000 * 133 * 4);
+	}
+	
+	
 	
 }

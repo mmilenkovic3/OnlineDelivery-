@@ -59,6 +59,7 @@ public class OrderService {
 		return Response.status(200).entity(o).build();
 	}
 	
+	
 
 	@POST
 	@Path("/statusAwaiting")	
@@ -66,6 +67,15 @@ public class OrderService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response statusAwaiting(HashMap<String, String> id) throws IOException {	
 		Order o = OrderRepository.statusAwaiting(id);
+		return Response.status(200).entity(o).build();
+	}
+	
+	@POST
+	@Path("/inPreparation")	
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response inPreparation(HashMap<String, String> id) throws IOException {	
+		Order o = OrderRepository.statusInPreparation(id);
 		return Response.status(200).entity(o).build();
 	}
 
