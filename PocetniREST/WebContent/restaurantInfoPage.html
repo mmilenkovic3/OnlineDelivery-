@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="jquery-3.3.1.min.js"> </script>
+</head>
+<body>
+<div class="info">
+<div>
+	<h3> About restaurant: </h3>
+	<table class="table table-bordered">
+	<tr>
+		<td > Name: </td>
+		<td ><lable id="name"></lable></td>
+	</tr>
+	<tr>
+		<td > Type: </td>
+		<td ><lable id="type"></lable></td>
+	</tr>
+	<tr>
+		<td > Status: </td>
+		<td ><lable id="status"></lable></td>
+	</tr>
+	<tr>
+		<td > Location: </td>
+		<td ><lable id="location"></lable></td>
+	</tr>
+	
+	<tr>
+		<td > Grade: </td>
+		<td ><lable id="grade"></lable></td>
+	</tr>
+	<tr>
+		<td > Picture: </td>
+		<td ><img id="picture" width="200px" height="200px"></img></td>
+	</tr>
+	</table>
+	</div>
+	<div>
+		<h3>  Article in offer: </h3>
+	<table id="articleTable"  style="cursor:pointer" class="table table-bordered">
+		<tr>
+			<th> Name </th>
+			<th> Price </th>
+			<th> Type </th>
+			<th> Descritpion </th>
+			<th> Quantity </th>
+			<th> Picture </th>
+			
+		</tr>
+		<tbody id="artBody">
+		
+		</tbody>
+	
+	</table>
+	
+	</div>
+	<div>
+		<h3>  Comments: </h3>
+	
+	
+	</div>
+</div>
+
+</body>
+</html>
+<script>
+var restaurantInfo;
+var listArticle;
+
+$(document).ready(function(){
+	var id = window.localStorage.getItem('idRestaurant');
+	$.ajax({
+
+		async : false,
+		type : "POST",
+		url : "rest/restaurant/getRestaurantById",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			id: id
+		}),
+			
+		success : function(data) {
+			restaurantInfo = data;	
+			
+
+			console.log(restaurantInfo);
+				},
+		error : function(message) {
+			alert("Error!");
+
+			console.log("Udje u error.");
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+	
+	$.ajax({
+
+		async : false,
+		type : "POST",
+		url : "rest/article/getArticleByIDRest",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			idRestaurant: id
+		}),
+			
+		success : function(data) {
+			listArticle = data;			
+
+			console.log(listArticle);
+				},
+		error : function(message) {
+			alert("Error!");
+
+			console.log("Udje u error.");
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+
+	console.log(restaurantInfo.logo);
+	document.getElementById("name").innerHTML = restaurantInfo.name;
+	document.getElementById("type").innerHTML = restaurantInfo.type;
+	document.getElementById("status").innerHTML = restaurantInfo.status;
+	document.getElementById("location").innerHTML = restaurantInfo.location.address.name+" "+restaurantInfo.location.address.number +', ' + restaurantInfo.location.address.city;
+	document.getElementById("grade").innerHTML = restaurantInfo.grade;
+	document.getElementById("picture").src = restaurantInfo.logo;
+	
+	 var article_data = '';
+		for(let i = 0; i <= listArticle.length-1; i++)
+			{
+			
+				//console.log(listArticle[i].picture);
+				article_data += '<tr  scope="row" onClick="selectedRow('+ listArticle[i].idArticle +')">';
+				article_data += '<td scope="col">'+ listArticle[i].name +'</td>';
+				article_data += '<td scope="col">'+ listArticle[i].price +'</td>';
+				article_data += '<td scope="col">'+ listArticle[i].type +'</td>';
+				article_data += '<td scope="col">'+ listArticle[i].description +'</td>';
+		        article_data += '<td scope="col">'+ listArticle[i].qunatityNum +' '+ listArticle[i].quantity  +'</td>';	  
+		        article_data += '<td scope="col"><img src='+listArticle[i].picture+' width="200px" height="200px"></td>';
+		        article_data += '</tr>';
+			}
+		
+		  $('#artBody').append(article_data);
+	
+});
+
+
+
+</script>
+<style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
+.info
+{
+	width: 80%;
+	background-color: white;
+	height: 100%;
+	margin: 0 auto;
+}
+</style>

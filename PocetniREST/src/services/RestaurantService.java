@@ -31,13 +31,13 @@ public class RestaurantService {
 	User loggedUser;
 
 
-	@GET
+	@POST
 	@Path("/getRestaurantById")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRestaurantById() {		
+	public Response getRestaurantById(HashMap<String, String> id) {		
 		
 		User user = (User) request.getSession().getAttribute("loggedUser");
-		Restaurant r = RestaurantRepository.getRestaurantByID(user.getIdRestaurant());
+		Restaurant r = RestaurantRepository.getRestaurantByID(Integer.parseInt(id.get("id")));
 		return Response.status(200).entity(r).build();
 	}
 	
