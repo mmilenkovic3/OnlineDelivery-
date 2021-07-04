@@ -12,6 +12,7 @@
 
 <div class="first">
 <div class="artInfo" >
+<button   style="width:100%;"   class="btn btn-warning"  onclick="back()" value="Back"> Back </button>
 	<h1 style="text-align: center;"> 
 	   Add/Edit article: 
 	</h1>
@@ -90,7 +91,15 @@
 </div>
 </body>
 </html>
-<script>function newArt()
+<script>
+
+function back()
+{
+
+	window.location.replace("manager.html");
+}
+
+function newArt()
 {
 	var artName = document.getElementById('artName');
 	 var artType = document.getElementById('artType');
@@ -100,14 +109,9 @@
 	 var artDescription = document.getElementById('artDescription');
 	 var artPicture = document.getElementById('artPicture');
 	 
-	 if(!artName.value ||  !artPrice.value)
+	 if(!artName.value ||  !artPrice.value || !artQuantityNum.value || !artDescription.value)
 		 {
 			 alert("Enter all field!");
-			 
-			 
-			 
-			 
-			 
 		 }
 	 
 	 else	 
@@ -217,7 +221,7 @@ function selectedRow(e) {
 	 console.log(e);
 	 idArt = e;
 	 document.getElementById('edit').disabled = false;
-	 document.getElementById("cancel").disabled = true;
+	 document.getElementById("cancel").disabled = false;
 
 	 document.getElementById("new").disabled = true;
 	 document.getElementById("save").disabled = true;
@@ -277,7 +281,7 @@ function cancel()
 	 document.getElementById("cancel").disabled = true;
 
 	 document.getElementById("save").disabled = true;
-	
+	 document.getElementById("edit").disabled = true;
 	
 }
 

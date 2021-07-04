@@ -60,7 +60,7 @@
           </tr>
       </table>
       
-        <div class="row" id="row">
+        <div class="row" id="row"  style="cursor:pointer" >
             
         </div>
   </div> 
@@ -70,7 +70,7 @@
 <script>
     var restaurantList;
     $(document).ready(function(){
-
+    	window.localStorage.removeItem('idRestaurant');
         
 
         $.ajax({
@@ -91,18 +91,19 @@
     restaurantList.sort(function(a, b){
     return a.status === b.status ? 0 : a.status < b.status ? -1 : 1;
     });
-    console.log("AAAA");
-    console.log(restaurantList);
-
+    
     var divRow = document.getElementById("row");
     //for(var one in restaurantList)
-    for(let one= restaurantList.length - 1; one >= 0; one--)
+    for(let one = restaurantList.length - 1; one >= 0; one--)
     {
-            //console.log(restaurantList[one]);
+            console.log(restaurantList[one]);
             var iDiv = document.createElement('div');
             iDiv.id = restaurantList[one].id;
             iDiv.className = 'col-sm-4';
-           
+            //iDiv.onclick = selectedRestaurant(restaurantList[one].idRestaurant);
+           	iDiv.setAttribute("onclick", "selectedRestaurant("+restaurantList[one].id+")");
+           	
+           	
             var panelprimary = document.createElement('div');            
             panelprimary.className = 'panel panel-primary';
 
@@ -175,8 +176,15 @@
         
 
 
-
     });
+    function selectedRestaurant(id)
+    {
+    	console.log(id);
+    	window.localStorage.setItem('idRestaurant', id);
+    	$(location).attr('href', 'http://localhost:8080/PocetniREST/restaurantInfoPage.html');
+    	
+    	
+    }
     
     function typeSearch()
     {
