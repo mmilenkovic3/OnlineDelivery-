@@ -102,6 +102,12 @@ else
 console.log(birthday);
 console.log(name);
 
+if(!name.value )
+	{
+		alert("Input fields are empty! Please fill them!");
+	}
+else
+	{
 $.ajax({
 	type : "POST",
 	url : "rest/users/saveGuest",
@@ -112,7 +118,7 @@ $.ajax({
 		name : name,
 		lastname : lastname,
 		gender : gender,
-		birthday : birthday		
+		birthday : document.getElementById("birthday").value	
 	}),
 	contentType : "application/json",
 	dataType : 'json',
@@ -128,7 +134,7 @@ $.ajax({
 		alert(message.responseText);
 	}
 });
-
+	}
 }
 
 

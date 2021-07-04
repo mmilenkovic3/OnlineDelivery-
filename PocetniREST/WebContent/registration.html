@@ -43,7 +43,7 @@
 		<td> <input type="password" id="passwordrepeat" style="border-color:red"/> </td>
 	</tr>
 	<tr colspan="2">
-		<td> <input type="submit" value="Submit" onclick="myFunction();return false;" /> </td>
+		<td> <input type="submit" value="Submit" onclick="myFunction(); return false" /> </td>
 	</tr>
 	
 	</table>
@@ -71,19 +71,21 @@ password = document.getElementById("password").value;
 passwordRepeat = document.getElementById("passwordrepeat").value;
 gender = $("input:radio[name=radiobtn]:checked").val()
 
-console.log(name + " " +gender);
-
+console.log(gender);
 if(gender == "Male")
 	gender = "MALE";
 else
 	gender = "FEMALE";
 
-console.log(new Date(birthday));
-var json = JSON.stringify(new Date(birthday));
-console.log(json);
-console.log(name);
 
-$.ajax({
+if(name === "" || lastname === "" || gender == "undefinde" || document.getElementById("birthday").value === ""
+		|| username === "" || password === "")
+{
+	alert("Input fields are empty! Please fill them!");
+}
+else
+{
+ $.ajax({
 	type : "POST",
 	url : "rest/users/saveGuest",
 	data : JSON.stringify({
@@ -92,7 +94,7 @@ $.ajax({
 		name : name,
 		lastname : lastname,
 		gender : gender,
-		birthday : birthday		
+		birthday : document.getElementById("birthday").value		
 	}),
 	contentType : "application/json",
 	dataType : 'json',
@@ -131,7 +133,8 @@ $.ajax({
 		alert(message.responseText);
 	}
 });
-
+}
+event.preventDefault();
 }
 
 
