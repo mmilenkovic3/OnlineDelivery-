@@ -65,6 +65,7 @@
 </div>
     
 <br>
+<div class="infoRest">
 <h1> RESTAURANT INFO: </h1>
 <div class="restInfo">
     <img id="logo"/>
@@ -73,10 +74,27 @@
     </table>
 
 </div>
+</div>
+<button id="addArticle " style="width:100%;" class="btn btn-warning" onclick="articlePage(); return false"> Articles </button>
 
-<button id="addArticle" class="btn btn-warning" onclick="articlePage(); return false"> Articles </button>
+<div class="infoRest">
+<h1> Orders from this restaurant: </h1>
+<table id="pursh"  class="table table-bordered">
+	<tr>
+		<th> ID </th>
+		<th> Articles </th>
+		<th> Restaurant name </th>
+		<th> Date </th>
+		<th> Price </th>
+		<th> Status </th>
+	</tr>
+	<tbody id="tableBodyPursh">
+	
+	</tbody>
+</table>
 
 
+</div>
 </body>
 
 </html>
@@ -86,9 +104,7 @@
 var allManager ;
 
 var loggedUser; 
-$(document).ready(function(){
-
-	
+$(document).ready(function(){	
 
 
 
@@ -137,14 +153,16 @@ $(document).ready(function(){
 
 	username.value = loggedUser.username;
 	username.disabled = true;
-
+var idRest;
 //PREGLED SVOG RESTORANA 
 $.getJSON("http://localhost:8080/PocetniREST/rest/restaurant/getAllRestaurant", function(data){
 	    var restaurant_data = '';
 	    $.each(data, function(key, value){           
             if(value.id == loggedUser.idRestaurant)
             {
+            	idRest = value.id;
                 document.getElementById("logo").src = value.logo;
+                document.getElementById("logo").style.width = "200px";
                 console.log(value.id);
                 restaurant_data += '<tr>';
                 restaurant_data += '<td> Name: </td> <td>'+value.name+'</td>';
@@ -153,17 +171,107 @@ $.getJSON("http://localhost:8080/PocetniREST/rest/restaurant/getAllRestaurant", 
                 restaurant_data += '</tr><tr>';
                 restaurant_data += '<td> Address: </td> <td>'+value.location.address.name+ ' ' + value.location.address.number + ', ' +value.location.address.city+ '</td>';	      
                 restaurant_data += '</tr>';
+                
+                
+                
             }
            
 	    });
 	    $('#restaurantInfo').append(restaurant_data);
 	  });
+	  
+// PREGLED PORUDZBINA
+$.ajax({
+	async : false,
+	url : "rest/order/getOrderByIdRestaurant",
+	type : 'POST',
+	dataType : 'json',
+	contentType : "application/json",
+	data : JSON.stringify({
+		idRestaurant: loggedUser.idRestaurant
+	}),
+		
+	success : function(data) {
+		if (data) {
+			orders = data;
+			console.log(orders);
+
+			var tableHeaderRowCount = 1;
+			var table = document.getElementById('pursh');
+			var rowCount = table.rows.length;
+			for (var i = tableHeaderRowCount; i < rowCount; i++) {
+			    table.deleteRow(tableHeaderRowCount);
+			}
+			
+			
+			var data;
+			for(let i = 0; i <= orders.length-1; i++)
+			{		
+				if(orders[i].status != "DELIVER")
+				{
+				data += '<tr scope="row">';
+			     data += '<td scope="col">'+orders[i].id +'</td>';
+			     data += '<td scope="col" style="height:40px;">';
+			     for(let j=0; j<= orders[i].articles.length-1; j++)
+			     { 
+
+			    	 console.log("YSAO Y FOR");
+			    	 console.log(orders[i].articles[j]);
+			    	 data += orders[i].articles[j].quantity +' '+ orders[i].articles[j].name + ' - ' + orders[i].articles[j].price +' RSD <br/>' ;
+			     
+			     }
+			     data += ' </td>';
+			     data += '<td scope="col">'+orders[i].restaurantName+' </td>';
+			     data += '<td scope="col">'+orders[i].date+' </td>';
+			     data += '<td scope="col">'+orders[i].price+' </td>';
+			     data += '<td scope="col">'+orders[i].status+' </td>';
+			     if(orders[i].status == "IN_PREPARATION")
+			    	 data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="changeStatus(orders['+i+'].id); return false;"> Change status </td>';
+			     else
+			    	 data += '<td scope="col"></td>';
+			     data += '<tr>';
+				}
+				
+			}
+			 
+		   $('#tableBodyPursh').append(data);
+		}
+	},
+	error : function(errorThrown) {
+		
+	}
+});
 
 });
 
 function articlePage()
 {
 	window.location.replace("articlePage.html");
+}
+function changeStatus(id)
+{
+	// Promena statusa iz IN_PREPARATION u AWAITING 
+	console.log(id);
+	$.ajax({
+		async : false,
+		type : "POST",
+		url : "rest/order/statusAwaiting",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			id: id
+		}),
+			
+		success : function(data) {
+			console.log(data);
+			alert("Order is ready for deliverer!");
+			location.reload(true);
+				},
+		error : function(message) {
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
 }
 
 
@@ -363,4 +471,9 @@ body
 
 }
     
+.infoRest
+{
+	background-color: white;
+	margin: 0 auto;
+}
 </style>
