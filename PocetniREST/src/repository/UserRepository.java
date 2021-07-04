@@ -78,10 +78,11 @@ public class UserRepository {
 		System.out.println("Unikatno username.");
 		return true;
 	}
+	static User loggedUser = null;
 	
 	public static User LogIn(User user)
 	{
-		User loggedUser = FindUser(user.getUsername(), user.getPassword());
+		loggedUser = FindUser(user.getUsername(), user.getPassword());
 		if(loggedUser == null)
 			return null;
 		else
@@ -147,6 +148,36 @@ public class UserRepository {
 		
 	}
 	
+	
+	public static User findUserByUsername(String username)
+	{
+		for(User u : GetAllUsers())
+		{
+			if(u.getUsername().equals(username))
+			{				
+				return u;
+			}
+		}
+		return null;
+	}
+	
+	public static void saveList(ArrayList<User> users)
+	{
+		try {
+			
+			objMapper.writeValue(Paths.get(pathUsers).toFile(), users);
+			
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	public static void addRestaurantToManager(HashMap<String,String> data) throws IOException
@@ -265,6 +296,11 @@ public class UserRepository {
 		}
 		
 		return newList;
+	}
+
+	public static User LoggedUser() {
+		// TODO Auto-generated method stub
+		return loggedUser;
 	}
 	
 	

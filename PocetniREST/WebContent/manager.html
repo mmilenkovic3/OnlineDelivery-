@@ -87,6 +87,7 @@
 		<th> Date </th>
 		<th> Price </th>
 		<th> Status </th>
+		<th> User </th>
 	</tr>
 	<tbody id="tableBodyPursh">
 	
@@ -225,9 +226,12 @@ $.ajax({
 			     data += '<td scope="col">'+orders[i].date+' </td>';
 			     data += '<td scope="col">'+orders[i].price+' </td>';
 			     data += '<td scope="col">'+orders[i].status+' </td>';
+			     data += '<td scope="col">'+orders[i].username+' </td>';
 			     if(orders[i].status == "IN_PREPARATION")
-			    	 data += '<td scope="col"><button id="addOrd" style="width:100%;"  class="btn btn-warning" onclick="changeStatus(orders['+i+'].id); return false;"> Change status </td>';
-			     else
+			    	 data += '<td scope="col"><button  style="width:100%;"  class="btn btn-warning" onclick="changeStatus(orders['+i+'].id); return false;"> Change to awaiting... </td>';
+			    	 else if(orders[i].status == "PROCESSING")
+			    		 data += '<td scope="col"><button  style="width:100%;"  class="btn btn-warning" onclick="changeToInPreparation(orders['+i+'].id); return false;">Change to in preparation... </td>';
+			    	 else
 			    	 data += '<td scope="col"></td>';
 			     data += '<tr>';
 				}
@@ -273,6 +277,32 @@ function changeStatus(id)
 			}
 		});
 }
+
+function changeToInPreparation(id)
+{
+	// Promena statusa iz IN_PREPARATION u AWAITING 
+	console.log(id);
+	$.ajax({
+		async : false,
+		type : "POST",
+		url : "rest/order/inPreparation",
+		dataType : 'json',
+		contentType : "application/json",
+		data : JSON.stringify({
+			id: id
+		}),
+			
+		success : function(data) {
+			console.log(data);			
+			location.reload(true);
+				},
+		error : function(message) {
+			$('#error').text(message);
+			$('#error').show().delay(3000).hide();
+			}
+		});
+}
+
 
 
 
