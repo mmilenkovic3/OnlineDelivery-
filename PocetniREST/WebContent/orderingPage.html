@@ -3,6 +3,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Customer - ordering </title>
+<style>
+
+
+</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -45,6 +49,7 @@
 </div>
 <div>
 	<table class="table table-bordered">
+	<!-- scope je atribut koji se koristi sa th, proveriti sta se ovde htelo -->
 	<tr scope="row">
 	<td style="text-align: center;" scope="col"><label id="sumPrice"> 0 </label></td>
 	<td  scope="col"><button id="back"  style="width:100%;"  class="btn btn-warning" onclick="create()" > Create order </button> </td>
@@ -53,8 +58,6 @@
 </div>
 
 </div>
-</body>
-</html>
 
 <script>
 var restaurantList;
@@ -412,9 +415,5 @@ function create()
 	
 }
 </script>
-
-<style>
-
-
-
-</style>
+</body>
+</html>

@@ -1,10 +1,8 @@
 package dto;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import model.Basket;
-import model.OrderStatus;
 
 public class OrderDTO {
 	private ArrayList<Basket> articles;   

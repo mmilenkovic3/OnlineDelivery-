@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Article;
 import model.FoodType;
 import model.Qunatity;
-import model.User;
 
 public class ArticleRepository {
 	

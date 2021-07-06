@@ -3,6 +3,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
+.info
+{
+	width: 80%;
+	background-color: white;
+	height: 100%;
+	margin: 0 auto;
+}
+</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -16,24 +30,24 @@
 	<table class="table table-bordered">
 	<tr>
 		<td > Name: </td>
-		<td ><lable id="name"></lable></td>
+		<td ><label id="name"></label></td>
 	</tr>
 	<tr>
 		<td > Type: </td>
-		<td ><lable id="type"></lable></td>
+		<td ><label id="type"></label></td>
 	</tr>
 	<tr>
 		<td > Status: </td>
-		<td ><lable id="status"></lable></td>
+		<td ><label id="status"></label></td>
 	</tr>
 	<tr>
 		<td > Location: </td>
-		<td ><lable id="location"></lable></td>
+		<td ><label id="location"></label></td>
 	</tr>
 	
 	<tr>
 		<td > Grade: </td>
-		<td ><lable id="grade"></lable></td>
+		<td ><label id="grade"></label></td>
 	</tr>
 	<tr>
 		<td > Picture: </td>
@@ -48,7 +62,7 @@
 			<th> Name </th>
 			<th> Price </th>
 			<th> Type </th>
-			<th> Descritpion </th>
+			<th> Description </th>
 			<th> Quantity </th>
 			<th> Picture </th>
 			
@@ -67,8 +81,6 @@
 	</div>
 </div>
 
-</body>
-</html>
 <script>
 var restaurantInfo;
 var listArticle;
@@ -156,17 +168,6 @@ $(document).ready(function(){
 
 
 </script>
-<style>
-body
-{
-    background-image: url('./images/back.jpg');
-    
-}
-.info
-{
-	width: 80%;
-	background-color: white;
-	height: 100%;
-	margin: 0 auto;
-}
-</style>
+</body>
+</html>
+

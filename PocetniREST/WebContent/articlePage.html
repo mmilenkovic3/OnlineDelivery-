@@ -4,6 +4,36 @@
 <meta charset="ISO-8859-1">
 <title>Articles</title>
 <script src="jquery-3.3.1.min.js"> </script>
+<style>
+
+body
+{
+    background-image: url('./images/back.jpg');    
+}
+
+.artContainer
+{
+	background-color: white;
+	width: 70%;
+	margin: 0 auto;
+	height:100%;
+}
+
+.artInfo
+{
+	width: 100%;
+	background: white;
+	margin: 0 auto;
+	opacity: 0.96;
+
+}
+
+.first
+{
+    margin: 0 auto;
+    width: 100%;
+}
+</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -46,7 +76,7 @@
         <tr>
             <td style="text-align: center; font-size:18px;" > Description: </td>
             <td> <input type="text" class="form-control"  id="artDescription" /></td>
-            <td cellspan="2"></td>
+            <td colspan="2"></td>
         </tr>
         <tr>
             <td style="text-align: center; font-size:18px;" > Picture: </td>
@@ -77,7 +107,7 @@
 			<th> Name </th>
 			<th> Price </th>
 			<th> Type </th>
-			<th> Descritpion </th>
+			<th> Description </th>
 			<th> Quantity </th>
 			<th> Picture </th>
 			
@@ -89,8 +119,6 @@
 	</table>
 </div>
 </div>
-</body>
-</html>
 <script>
 
 function back()
@@ -381,34 +409,7 @@ function getLoggedUser() {
 }
 
 </script>
+</body>
+</html>
 
-<style>
 
-body
-{
-    background-image: url('./images/back.jpg');    
-}
-
-.artContainer
-{
-	background-color: white;
-	width: 70%;
-	margin: 0 auto;
-	height:100%;
-}
-
-.artInfo
-{
-	width: 100%;
-	background: white;
-	margin: 0 auto;
-	opacity: 0.96;
-
-}
-
-.first
-{
-    margin: 0 auto;
-    width: 100%;
-}
-</style>

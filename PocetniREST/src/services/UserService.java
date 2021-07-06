@@ -3,7 +3,6 @@ package services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -16,10 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import helpers.HelpersMethods;
-import model.Restaurant;
 import model.Role;
 import model.User;
-import repository.RestaurantRepository;
 import repository.UserRepository;
 
 @Path("/users")

@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 public class Restaurant {
 	
 	private int id;

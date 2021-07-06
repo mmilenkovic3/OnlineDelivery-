@@ -4,6 +4,61 @@
 <meta charset="UTF-8">
 <title>Rent apartment</title>
 <script src="index.js"> </script>
+<style>
+body
+{
+    background-image: url('./images/back.jpg');
+    
+}
+
+#search
+{
+    margin-bottom: 20px;
+}
+
+
+.restaurant-container
+{    
+    margin-right: 30px;
+    margin-left: 30px;
+
+}
+
+.navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    .jumbotron {
+      background-color: #f9df95;
+      margin-bottom: 20px;
+      margin-top:-50px;
+      height: 240px;
+      
+      font-size:22px;
+    }
+
+    .btn
+    {
+        background-color: #a175d7;
+    }
+
+    .panel-primary > .panel-heading
+    { 
+        background-color: #7ed4ef;
+        border-color: #7ed4ef;
+    }
+</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -15,11 +70,11 @@
 
 <div class="jumbotron" >
     <div class="container text-center">
-    <h1>ALLWAYS HUNGRY</h1>
+    <h1>ALWAYS HUNGRY</h1>
     <p>Online deliver</p>
     
     <button id="registration" class="btn btn-warning" onclick="redirect()"> Registration </button>
-    <button id="singin" class="btn btn-warning" onclick="signIn()"> Sing in </button>
+    <button id="signin" class="btn btn-warning" onclick="signIn()"> Sign in </button>
     </div>
   </div>
   
@@ -65,8 +120,6 @@
         </div>
   </div> 
 
-</body>
-</html>
 <script>
     var restaurantList;
     $(document).ready(function(){
@@ -616,59 +669,7 @@
 
     }
 </script>
-
-<style>
-body
-{
-    background-image: url('./images/back.jpg');
-    
-}
-
-#search
-{
-    margin-bottom: 20px;
-}
+</body>
+</html>
 
 
-.restaurant-container
-{    
-    margin-right: 30px;
-    margin-left: 30px;
-
-}
-
-.navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-    }
-   
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    .jumbotron {
-      background-color: #f9df95;
-      margin-bottom: 20px;
-      margin-top:-50px;
-      height: 240px;
-      
-      font-size:22px;
-    }
-
-    .btn
-    {
-        background-color: #a175d7;
-    }
-
-    .panel-primary > .panel-heading
-    { 
-        background-color: #7ed4ef;
-        border-color: #7ed4ef;
-    }
-</style>

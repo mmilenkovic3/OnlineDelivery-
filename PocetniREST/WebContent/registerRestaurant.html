@@ -31,12 +31,12 @@
     </tr>
     <tr>
         <td> Location width: </td>
-        <td> <input type="text" id="width"></input> </td>
+        <td> <input type="text" id="width"> </td>
     </tr>
     
     <tr>
         <td> Location height: </td>
-        <td> <input type="text" id="height"></input> </td>
+        <td> <input type="text" id="height"> </td>
     </tr>
     <tr>
         <td> Address: </td>
@@ -56,12 +56,13 @@
     </tr>
     <tr>
         <td> Select menager: </td>
+        <!-- type="text" se koristi za input tag, proveriti kompatibilnost za select -->
         <td> <select type="text" id="managerSelect"></select></td>
         <td> <button value="Proba" id="btnAddManager" onclick="addManager();return false;">Add new Manager</button></td>
     </tr>
     <tr>
         <td> Grade: </td>
-        <td> <input type="text" id="grade"></input></td>
+        <td> <input type="text" id="grade"></td>
          </tr>
     <tr>
         <!--<td> Upload logo: </td>
@@ -73,6 +74,7 @@
           <td colspan="2" align="right"><input type="file" onchange="readURL(this);" id="fileSlika"  accept=".jpg, .jpeg, .png" /></td>
 
     </tr>
+    <!-- prijavljuje invalid tagove, proveriti na stranici konkretno kako se ovo ponasa -->
             <p><img id="output" width="200" /></p>
 
     <br>
@@ -107,11 +109,11 @@
 	</tr>
 	<tr>
 		<td> Gender: </td>
-		<td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male</input>  </td>
+		<td> <input type="radio" id="male" class="radioBtnClass" value="Male"  name="radiobtn">Male  </td>
 	</tr>
 	<tr>
 		<td> </td>
-		<td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female</input> </td>
+		<td> <input type="radio" id="female" class="radioBtnClass" value="Female" name="radiobtn">Female </td>
 	</tr>
 	
 	<tr>
