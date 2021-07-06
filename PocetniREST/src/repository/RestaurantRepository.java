@@ -122,8 +122,8 @@ public class RestaurantRepository {
 	{
 		System.out.println(type.get("type"));
 		RestaurantType rType = null;
-			if(type.get("type").equals("CHINES"))
-				rType = RestaurantType.CHINES;
+			if(type.get("type").equals("CHINESE"))
+				rType = RestaurantType.CHINESE;
 			else if(type.get("type").equals("MEXICAN"))
 				rType = RestaurantType.MEXICAN;
 			else if(type.get("type").equals("ITALIAN"))
