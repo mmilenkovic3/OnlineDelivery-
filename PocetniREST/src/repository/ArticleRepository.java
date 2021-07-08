@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import helpers.LocalVariables;
 import model.Article;
 import model.FoodType;
 import model.Qunatity;
@@ -15,12 +16,11 @@ import model.Qunatity;
 public class ArticleRepository {
 	
 	public static ObjectMapper objMapper = new ObjectMapper();
-	public static String pathArticle = "C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\files\\article.json";
+	public static String pathArticle = LocalVariables.ROOT_PATH + "\\PocetniREST\\WebContent\\files\\article.json";
 
 	public static ArrayList<Article> GetAllArticle() {
 
 		try {
-
 			ArrayList<Article> a = new ArrayList<Article>(
 					Arrays.asList(objMapper.readValue(Paths.get(pathArticle).toFile(), Article[].class)));
 

@@ -1,5 +1,6 @@
 package dto;
 
+import helpers.LocalVariables;
 import model.RestaurantType;
 import model.Status;
 

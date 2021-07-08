@@ -1,5 +1,6 @@
 package repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.RestaurantDTO;
+import helpers.LocalVariables;
 import model.Address;
 import model.Location;
 import model.Restaurant;
@@ -19,12 +21,12 @@ import model.RestaurantType;
 public class RestaurantRepository {
 	
 	public static ObjectMapper objMapper = new ObjectMapper();
-	public static String pathRestaurant = "C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\files\\restaurants.json";
+	public static String pathRestaurant = LocalVariables.ROOT_PATH + "\\PocetniREST\\WebContent\\files\\restaurants.json";
 
 	public static ArrayList<Restaurant> GetAllRestaurant() {
 
 		try {
-
+			
 			ArrayList<Restaurant> restaurant = new ArrayList<Restaurant>(
 					Arrays.asList(objMapper.readValue(Paths.get(pathRestaurant).toFile(), Restaurant[].class)));
 
@@ -97,7 +99,7 @@ public class RestaurantRepository {
 		}
 		System.out.println(imageUrl);
 		Path source = Paths.get(imageUrl);
-		Path destination = Paths.get("C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\images");
+		Path destination = Paths.get(LocalVariables.ROOT_PATH + "\\PocetniREST\\WebContent\\images");
 		Files.createDirectories(destination);
 		Files.copy(source,  destination);
 		    // I decided to replace already existing files with same name

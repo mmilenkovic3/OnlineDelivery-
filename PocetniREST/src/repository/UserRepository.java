@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import helpers.LocalVariables;
 import model.Gender;
 import model.Role;
 import model.Type;
@@ -21,7 +22,7 @@ import model.User;
 public class UserRepository {
 
 	public static ObjectMapper objMapper = new ObjectMapper();
-	public static String pathUsers = "C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\files\\users.json";
+	public static String pathUsers = LocalVariables.ROOT_PATH + "\\PocetniREST\\WebContent\\files\\users.json";
 
 	public static ArrayList<User> GetAllUsers() {
 

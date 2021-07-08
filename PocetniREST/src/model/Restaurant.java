@@ -16,7 +16,7 @@ public class Restaurant {
 
 	private Restaurant() {}
 	
-	public Restaurant(int id,String name, RestaurantType type, Status status,double grade, Location location) {
+	public Restaurant(int id,String name, RestaurantType type, Status status, double grade, Location location) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,7 +25,7 @@ public class Restaurant {
 		this.status = status;
 		this.location = location;
 		this.grade = grade;
-		this.logo = "prazno.jpg";
+		this.logo = "./images/meal-icon.png";
 	}
 	
 	

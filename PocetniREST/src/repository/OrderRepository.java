@@ -10,6 +10,7 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.OrderDTO;
+import helpers.LocalVariables;
 import model.Order;
 import model.OrderStatus;
 import model.User;
@@ -17,7 +18,7 @@ import model.User;
 public class OrderRepository {
 
 	public static ObjectMapper objMapper = new ObjectMapper();
-	public static String pathOrder = "C:\\Users\\Milenkovic\\git\\repository\\PocetniREST\\WebContent\\files\\orders.json";
+	public static String pathOrder = LocalVariables.ROOT_PATH + "\\PocetniREST\\WebContent\\files\\orders.json";
 
 	private static ArrayList<Order> GetAllOrder() {
 
