@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import helpers.LocalVariables;
 import model.Article;
 import model.FoodType;
-import model.Qunatity;
+import model.Quantity;
 
 public class ArticleRepository {
 	
@@ -85,9 +85,9 @@ public class ArticleRepository {
 						a.setType(FoodType.DRINK);
 					
 					if(article.get("quantity").equals("ML"))
-						a.setQuantity(Qunatity.ML);
+						a.setQuantity(Quantity.ML);
 					else
-						a.setQuantity(Qunatity.G);
+						a.setQuantity(Quantity.G);
 					
 					edited = a;
 					break;

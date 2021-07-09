@@ -51,7 +51,7 @@ public class ArticleService {
 	public Response Edit(HashMap<String, String> data)
 	{
 		System.out.println("Edit controller article!");
-		System.out.println("podatci" + data);
+		System.out.println("podaci" + data);
 		/*if (GetLoggedUser() == null) {
 			return Response.status(403).entity(HelpersMethods.GetJsonValue("Unauthorized")).build();
 		}

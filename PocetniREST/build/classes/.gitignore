@@ -29,6 +29,7 @@
 /jersey-media-jaxb.jar
 /jersey-media-json-jackson-2.22.1.jar
 /jersey-server.jar
+/meal-icon.png
 /model/
 /org.osgi.core-4.2.0.jar
 /osgi-resource-locator-1.0.1.jar
@@ -37,4 +38,3 @@
 /services/
 /tortiljaCasa.jpg
 /validation-api-1.1.0.Final.jar
-/meal-icon.png

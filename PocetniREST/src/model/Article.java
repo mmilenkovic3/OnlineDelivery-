@@ -5,7 +5,7 @@ public class Article {
 	private String name;
 	private FoodType type;
 	private int idRestaurant;
-	private Qunatity quantity;
+	private Quantity quantity;
 	private double qunatityNum;
 	private double price;
 	private String description;
@@ -13,7 +13,7 @@ public class Article {
 	
 	public Article() {}
 
-	public Article(int idArticle, String name, FoodType type, int idRestaurant, Qunatity quantity, double qunatityNum,
+	public Article(int idArticle, String name, FoodType type, int idRestaurant, Quantity quantity, double qunatityNum,
 			double price, String description, String picture) {
 		super();
 		this.idArticle = idArticle;
@@ -27,7 +27,7 @@ public class Article {
 		this.picture = picture;
 	}
 	
-	public Article(int idArticle, String name, FoodType type,  Qunatity quantity, double qunatityNum,
+	public Article(int idArticle, String name, FoodType type,  Quantity quantity, double qunatityNum,
 			double price, String description, String picture) {
 		super();
 		this.idArticle = idArticle;
@@ -79,11 +79,11 @@ public class Article {
 		this.idRestaurant = idRestaurant;
 	}
 
-	public Qunatity getQuantity() {
+	public Quantity getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Qunatity quantity) {
+	public void setQuantity(Quantity quantity) {
 		this.quantity = quantity;
 	}
 

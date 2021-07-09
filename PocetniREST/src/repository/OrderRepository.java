@@ -72,7 +72,7 @@ public class OrderRepository {
 		{
 			if(o.getId() == Long.parseLong(id.get("id")))
 			{
-				o.setStatus(OrderStatus.CANDELED);
+				o.setStatus(OrderStatus.CANCELLED);
 				order = o;
 			}
 		}	
@@ -110,7 +110,7 @@ public class OrderRepository {
 		{
 			if(o.getId() == Long.parseLong(id.get("id")))
 			{
-				o.setStatus(OrderStatus.AWAITING);
+				o.setStatus(OrderStatus.AWAITING_DELIVERY);
 				order = o;
 			}
 		}	
