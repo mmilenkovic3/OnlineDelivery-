@@ -242,12 +242,12 @@ public class UserService {
 	
 	
 	@POST
-	@Path("/fillterByRole")
+	@Path("/filterByRole")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response fillterByRole(HashMap<String, String> role) throws IOException {	
+	public Response filterByRole(HashMap<String, String> role) throws IOException {	
 				
-			ArrayList<User> userByRole = UserRepository.fillterByRole(role);
+			ArrayList<User> userByRole = UserRepository.filterByRole(role);
 			if(userByRole == null)
 				return Response.status(401).entity("EMPTY").build();
 			
@@ -258,12 +258,12 @@ public class UserService {
 	}
 	
 	@POST
-	@Path("/fillterByUserType")
+	@Path("/filterByUserType")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response fillterByUserType(HashMap<String, String> type) throws IOException {	
+	public Response filterByUserType(HashMap<String, String> type) throws IOException {	
 				
-			ArrayList<User> userType = UserRepository.fillterByType(type);
+			ArrayList<User> userType = UserRepository.filterByType(type);
 			if(userType == null)
 				return Response.status(401).entity("EMPTY").build();
 			

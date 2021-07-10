@@ -357,7 +357,7 @@ function roleSearch(){
 	$.ajax({
 		async : false,
 		type : 'POST',
-		url : "rest/users/fillterByRole",
+		url : "rest/users/filterByRole",
 		dataType : 'json',
 		data: JSON.stringify({
 			role : role
@@ -457,7 +457,7 @@ function userTypeSearch()
 	$.ajax({
 		async : false,
 		type : 'POST',
-		url : "rest/users/fillterByUserType",
+		url : "rest/users/filterByUserType",
 		dataType : 'json',
 		data: JSON.stringify({
 			type : userType

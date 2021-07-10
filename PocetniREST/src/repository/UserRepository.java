@@ -244,7 +244,7 @@ public class UserRepository {
 	}
 	
 
-	public static ArrayList<User> fillterByRole(HashMap<String, String> role) {
+	public static ArrayList<User> filterByRole(HashMap<String, String> role) {
 		Role roleType = null;
 			if(role.get("role").equals("ADMIN"))
 				roleType = Role.ADMIN;
@@ -271,7 +271,7 @@ public class UserRepository {
 		return newList;
 	}
 	
-	public static ArrayList<User> fillterByType(HashMap<String, String> type) {		
+	public static ArrayList<User> filterByType(HashMap<String, String> type) {		
 		Type userType = null;
 			if(type.get("type").equals("GOLDEN"))
 				userType = Type.GOLDEN;
